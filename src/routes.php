@@ -1,7 +1,7 @@
 <?php
 
 return [
-	"j" => (new Controllers\Test())->index(),
-	"" => (new Controllers\Index())->index(),
+	"/" => (new Controllers\Index())->index(),
+	"/j" => (new Controllers\Test())->index(),
 ];
 
