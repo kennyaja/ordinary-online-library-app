@@ -16,6 +16,6 @@ class Login {
 	}
 	
 	public function api_login() {
-		header("location: index.php");
+		header("location: /");
 	}
 }
