@@ -2,6 +2,6 @@
 
 a web app to be specific
 
-flowcharts and other stuff about the structure of this app will be in  `docs/`
+flowcharts and other stuff about the structure of this app are in  `docs/`
 
 wip
