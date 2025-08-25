@@ -32,7 +32,7 @@ class View {
 
 		ob_start();
 
-		require((new Directory())->get_full_path("src/Lib/View/default_components/boilerplate.php"));
+		require(Directory::get_full_path("src/Lib/View/default_components/boilerplate.php"));
 		$boilerplateContents = ob_get_clean();
 
 		return $boilerplateContents;
@@ -46,7 +46,7 @@ class View {
 			$$key = $value;
 		}
 
-		require((new Directory())->get_full_path("src/Views/" . $this->viewPath));
+		require(Directory::get_full_path("src/Views/" . $this->viewPath));
 		$fileContents = ob_get_contents();
 		ob_end_clean();
 
