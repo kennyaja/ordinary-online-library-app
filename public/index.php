@@ -1,3 +1,3 @@
 <?php
 
-require("../src/main.php");
+require(getcwd() . "/../src/main.php");

@@ -2,8 +2,11 @@
 
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
-require("../vendor/autoload.php");
-$routes = require("../src/routes.php");
+require(getcwd() . "/../vendor/autoload.php");
+
+use App\Lib\Directory\Directory;
+$directory = new Directory();
+$routes = require($directory->get_full_path("src/routes.php"));
 
 //if (is_array($routes[$path])) {
 //	if ($routes[$path]["method"] != $_SERVER["REQUEST_METHOD"]) {

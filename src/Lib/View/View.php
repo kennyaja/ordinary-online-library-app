@@ -2,6 +2,8 @@
 
 namespace App\Lib\View;
 
+use App\Lib\Directory\Directory;
+
 class View {
 	protected string $viewPath;
 	protected array $data;
@@ -30,7 +32,7 @@ class View {
 
 		ob_start();
 
-		require("../src/Lib/View/default_components/boilerplate.php");
+		require((new Directory())->get_full_path("src/Lib/View/default_components/boilerplate.php"));
 		$boilerplateContents = ob_get_clean();
 
 		return $boilerplateContents;
@@ -44,7 +46,7 @@ class View {
 			$$key = $value;
 		}
 
-		require("../src/Views/" . $this->viewPath);
+		require((new Directory())->get_full_path("src/Views/" . $this->viewPath));
 		$fileContents = ob_get_contents();
 		ob_end_clean();
 
