@@ -1,8 +1,8 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
-use Lib\View;
+use App\Lib\View\View;
 
 class Test {
 	public function index() {

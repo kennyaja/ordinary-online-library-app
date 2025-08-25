@@ -4,13 +4,18 @@ namespace App\Controllers;
 
 use App\Lib\View\View;
 
-class Index {
+class Login {
 	public function index() {
 		$view = new View(
-			"index.php", 
-			title: "asdlkjsalkdja", 
+			"login/index.php",
+			title: "Login",
 			metadata: (new View("components/metadata.php"))->get_raw(),
 		);
+
 		return $view->get();
+	}
+	
+	public function api_login() {
+		header("location: index.php");
 	}
 }

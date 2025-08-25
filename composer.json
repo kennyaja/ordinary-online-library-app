@@ -2,7 +2,7 @@
     "name": "user/ordinary-online-library-app",
     "autoload": {
         "psr-4": {
-            "User\\OrdinaryOnlineLibraryApp\\": "src/"
+            "App\\": "src/"
         },
         "classmap": [
             "src/Controllers",

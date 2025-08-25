@@ -1,6 +1,6 @@
 <?php
 
-namespace Lib;
+namespace App\Lib\View;
 
 class View {
 	protected string $viewPath;
