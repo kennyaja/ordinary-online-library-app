@@ -1,8 +1,14 @@
 <?php
 
+session_start();
+
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
 require(getcwd() . "/../vendor/autoload.php");
+
+use Dotenv\Dotenv;
+$dotenv = Dotenv::createImmutable(__DIR__ . "/..");
+$dotenv->load();
 
 use App\Lib\Directory\Directory;
 $routes = require(Directory::get_full_path("src/routes.php"));

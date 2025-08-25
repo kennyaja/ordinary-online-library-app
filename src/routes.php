@@ -4,9 +4,12 @@ use App\Controllers;
 
 return [
 	"/" => [Controllers\Index::class, "index"],
+
 	"/j" => [Controllers\Test::class, "index"],
+
 	"/login" => [Controllers\Login::class, "index"],
-	
+	"/signup" => [Controllers\Login::class, "signup"],
 	"/api/login" => [Controllers\Login::class, "api_login", "method" => "POST"],
+	"/api/signup" => [Controllers\Login::class, "api_signup", "method" => "POST"],
 ];
 
