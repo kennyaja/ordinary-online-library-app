@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Lib\Model;
+namespace App\Lib\Database;
 
 use PDO;
 
-class Model {
+class Database {
 	public $db;
 	function __construct() {
 		$db_driver = $_ENV["db_driver"];

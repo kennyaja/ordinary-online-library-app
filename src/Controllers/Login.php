@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Lib\View\View;
-use App\Lib\Model\Model;
+use App\Models\UsersModel;
 
 class Login {
 	public function index() {
@@ -36,17 +36,17 @@ class Login {
 	}
 	
 	public function api_login() {
-		$model = new Model();
-		$check_query = $model->db->prepare("SELECT * FROM users WHERE username = (?)");
-		$check_query->execute([$_POST["username"]]);
-		
-		if ($check_query->columnCount() == 0) {
-			return json_encode(["status" => "err", "error" => "Username or password is incorrect"]);
-		}
+		header("Content-Type: application/json");
 
-		$user_data = $check_query->fetch();
+		// $database = new Database();
+		// $check_query = $database->db->prepare("SELECT * FROM users WHERE username=:username");
+		// $check_query->execute(["username" => $_POST["username"]]);
+		// 
+		// $user_data = $check_query->fetch();
+		$users_model = new UsersModel();
+		$user_data = $users_model->getFirst();
 
-		if (!password_verify($_POST["password"], $user_data["password_hash"])) {
+		if (!$user_data || !password_verify($_POST["password"], $user_data["password_hash"])) {
 			return json_encode(["status" => "err", "error" => "Username or password is incorrect"]);
 		}
 
@@ -66,9 +66,18 @@ class Login {
 	}
 
 	public function api_signup() {
-		$model = new Model();
-		$insert_query = $model->db->prepare("INSERT INTO users (username, password_hash, email) VALUES (?, ?, ?)");
-		$insert_query->execute([$_POST["username"], password_hash($_POST["password"], PASSWORD_DEFAULT), $_POST["email"] ?? ""]);
+		// $database = new Database();
+		// $insert_query = $database->db->prepare("INSERT INTO users (username, password_hash, email) VALUES (:username, :password_hash, :email)");
+		// $insert_query->execute([
+		// 	"username" => $_POST["username"], 
+		// 	"password_hash" => password_hash($_POST["password"], PASSWORD_DEFAULT), 
+		// 	"email" => $_POST["email"] ?? ""]);
+		$users_model = new UsersModel();
+		$users_model->insert([
+			"username" => $_POST["username"], 
+			"password_hash" => password_hash($_POST["password"], PASSWORD_DEFAULT), 
+			"email" => $_POST["email"] ?? ""]);
+
 		header("location: /login");
 		return;
 	}
