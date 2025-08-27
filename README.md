@@ -1,6 +1,6 @@
 # ordinary online library app
 
-a web app to be specific
+a web app for managing digital and physical books, made in good ol' php
 
 flowcharts and other stuff about the structure of this app are in  `docs/`
 
