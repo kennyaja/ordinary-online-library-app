@@ -21,3 +21,8 @@ tabel dan fieldnya didefinisikan sebagai berikut:
 relasi tabel didefinisikan sebagai berikut:
 
 - `books.borrowed_by` -> `users.id`
+
+
+diagram untuk database (bagi yang peduli):
+
+<img width="881" height="639" alt="2025-08-27 14:01:31" src="https://github.com/user-attachments/assets/03c7dfa3-4d28-4989-8644-0ebb2d9c2813" />
