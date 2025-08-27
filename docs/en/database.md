@@ -21,3 +21,8 @@ the tables and their fields are defined as such:
 the relation(s) of the tables are defined as such:
 
 - `books.borrowed_by` -> `users.id`
+
+
+diagram for the database (for those who care):
+
+<img width="881" height="639" alt="2025-08-27 14:01:31" src="https://github.com/user-attachments/assets/03c7dfa3-4d28-4989-8644-0ebb2d9c2813" />
