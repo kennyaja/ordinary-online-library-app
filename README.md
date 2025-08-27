@@ -10,3 +10,8 @@ wip
 ## running
 
 to run the app, rename `env` to `.env` (don't forget to uncomment and adjust the variables) then run `php -S localhost:[port] -t public/` in the project root
+
+
+## requirements
+
+php 8.4+ (with pdo extension)
