@@ -7,10 +7,6 @@ use App\Models\UsersModel;
 
 class Login {
 	public function index() {
-		// if(isset($_SESSION["error_msg"])) {
-		// 	$msg = $_SESSION["error_msg"];
-		// 	unset($_SESSION["error_msg"]);
-		// }
 		if (isset($_SESSION["user_id"])) {
 			header("location: /");
 			return;
@@ -44,7 +40,7 @@ class Login {
 		// 
 		// $user_data = $check_query->fetch();
 		$users_model = new UsersModel();
-		$user_data = $users_model->getFirst();
+		$user_data = $users_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
 
 		if (!$user_data || !password_verify($_POST["password"], $user_data["password_hash"])) {
 			return json_encode(["status" => "err", "error" => "Username or password is incorrect"]);

@@ -19,7 +19,7 @@ abstract class Model extends Database {
 	public function getAll(string $column_name = "*", string|null $condition = null, array|null $params = null) {
 		$query_str = "SELECT $column_name FROM $this->table";
 		if ($condition != null) {
-			$query_str .= "WHERE $condition";
+			$query_str .= " WHERE $condition";
 		}
 		$select_query = $this->db->prepare($query_str);
 		$select_query->execute($params);
@@ -37,5 +37,22 @@ abstract class Model extends Database {
 		$query_str = "INSERT INTO $this->table ($columns) VALUES ($param_names)";
 		$insert_query = $this->db->prepare($query_str);
 		$insert_query->execute($params);
+	}
+
+	// TODO: do this tmr i wanna sleep
+	public function update(array $params, string $condition, array|null $extra_params = null) {
+		$columns = array_keys($params);
+		$param_variables = [];
+		foreach ($columns as $column) {
+			array_push($param_variables, $column . "=:" . $column);
+		}
+		
+		$query_str = "UPDATE $this->table SET " . join(", ", $param_variables) . " WHERE $condition";
+		$update_query = $this->db->prepare($query_str);
+		if ($extra_params != null) {
+			$update_query->execute(array_merge($params, $extra_params));
+		} else {
+			$update_query->execute($params);
+		}
 	}
 }

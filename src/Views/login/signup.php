@@ -6,7 +6,7 @@
 		<input type="text" placeholder="e.g. Xx_EpicGamer1_xX" name="username" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
 
 		<label for="password">Password</label>
-		<input type="text" placeholder="Must be over 3.14159265358979323846 characters" name="password" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
+		<input type="password" placeholder="Must be over 3.14159265358979323846 characters" name="password" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
 
 		<label for="email">Email</label>
 		<input type="text" placeholder="e.g. skeleton@&#x1F480;&#x1F3BA;.tk" name="email" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
