@@ -1,5 +1,7 @@
 <?php
 
+ini_set("display_errors", 0);
+
 session_start();
 
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
@@ -37,3 +39,6 @@ if (isset($routes[$path])) {
 	http_response_code(404);
 }
 
+if (http_response_code() >= 400) {
+	echo http_response_code();
+}
