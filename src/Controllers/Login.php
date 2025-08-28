@@ -65,6 +65,14 @@ class Login {
 
 		header("location: /");
 	}
+	
+	public function api_logout() {
+		unset($_SESSION["username"]);
+		unset($_SESSION["user_id"]);
+		unset($_SESSION["user_role"]);
+		
+		header("location: /");
+	}
 
 	public function api_signup() {
 		$users_model = new UsersModel();
