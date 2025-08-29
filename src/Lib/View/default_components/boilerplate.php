@@ -7,8 +7,6 @@
 		<?= $view_data["metadata"] ?>
 	</head>
 	<body>
-		<?= $view_data["header"] ?>
 		<?= $view_data["content"] ?>
-		<?= $view_data["footer"] ?>
 	</body>
 </html>

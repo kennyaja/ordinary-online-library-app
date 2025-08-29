@@ -9,16 +9,12 @@ class View {
 	protected array $data;
 	protected string $title;
 	protected string $metadata;
-	protected string $header;
-	protected string $footer;
 
-	function __construct(string $view_path, array $data = [], string $title = "Document", string $metadata = "", string $header = "", string $footer = "") {
+	function __construct(string $view_path, array $data = [], string $title = "Document", string $metadata = "") {
 		$this->view_path = $view_path;
 		$this->data = $data;
 		$this->title = $title;
 		$this->metadata = $metadata;
-		$this->header = $header;
-		$this->footer = $footer;
 	}
 
 	public function get() {
@@ -26,9 +22,7 @@ class View {
 
 		$view_data["title"] = $this->title;
 		$view_data["metadata"] = $this->metadata;
-		$view_data["header"] = $this->header;
 		$view_data["content"] = $file_contents;
-		$view_data["footer"] = $this->footer;
 
 		ob_start();
 
