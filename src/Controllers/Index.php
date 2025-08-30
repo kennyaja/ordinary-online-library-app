@@ -11,11 +11,6 @@ class Index {
 			return;
 		}
 
-		$view = new View(
-			"index.php", 
-			title: "asdlkjsalkdja", 
-			metadata: (new View("components/metadata.php"))->get_raw(),
-		);
-		return $view->get();
+		return View::get("index.php", ["title" => "not document"]);
 	}
 }

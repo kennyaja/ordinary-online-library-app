@@ -14,23 +14,11 @@ class Login {
 			return;
 		}
 
-		$view = new View(
-			"login/index.php",
-			title: "Login",
-			metadata: (new View("components/metadata.php"))->get_raw(),
-		);
-
-		return $view->get();
+		return View::get("login/index.php", ["title" => "Log In"]);
 	}
 
 	public function signup() {
-		$view = new View(
-			"login/signup.php",
-			title: "Sign Up",
-			metadata: (new View("components/metadata.php"))->get_raw(),
-		);
-
-		return $view->get();
+		return View::get("login/signup.php", ["title" => "Sign Up"]);
 	}
 	
 	public function api_login() {
