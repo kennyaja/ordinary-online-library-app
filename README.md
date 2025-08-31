@@ -9,7 +9,18 @@ wip
 
 ## running
 
-to run the app, rename `env` to `.env` (don't forget to uncomment and adjust the variables) then run `php -S localhost:[port] -t public/` in the project root
+to run the app: 
+1. clone this repository
+    ```
+    git clone https://github.com/kennyaja/ordinary-online-library-app
+    cd ordinary-online-library-app
+    ```
+2. rename `env` to `.env` (don't forget to uncomment and adjust the variables) 
+3. run the command
+    ```
+    php -S localhost:[port] -t public/
+    ```
+    in the project root
 
 
 ## requirements
