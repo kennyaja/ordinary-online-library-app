@@ -1,17 +1,28 @@
-<h1 class="text-5xl text-center mt-48">Sign Up</h1>
+<?php
+use App\Lib\View\View;
+?>
 
-<div class="w-120 max-w-screen mx-auto px-6 py-12 mt-6 rounded-lg shadow-lg bg-gray-50">
-	<form action="/api/signup" method="post">
-		<label for="username">Username</label>
-		<input type="text" placeholder="e.g. Xx_EpicGamer1_xX" name="username" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<?= View::get("components/metadata.php", ["title" => $title]) ?>
+</head>
+<body>
+	<h1 class="text-5xl text-center mt-48">Sign Up</h1>
 
-		<label for="password">Password</label>
-		<input type="password" placeholder="Must be over 3.14159265358979323846 characters" name="password" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
+	<div class="w-120 max-w-screen mx-auto px-6 py-12 mt-6 rounded-lg shadow-lg bg-gray-50">
+		<form action="/api/signup" method="post">
+			<label for="username">Username</label>
+			<input type="text" placeholder="e.g. Xx_EpicGamer1_xX" name="username" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
 
-		<label for="email">Email</label>
-		<input type="text" placeholder="e.g. skeleton@&#x1F480;&#x1F3BA;.tk" name="email" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
-		
-		<input type="submit" value="Sign up" class="bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-md w-full p-3 duration-200 cursor-pointer">
-	</form>
-</div>
+			<label for="password">Password</label>
+			<input type="password" placeholder="Must be over 3.14159265358979323846 characters" name="password" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
 
+			<label for="email">Email</label>
+			<input type="text" placeholder="e.g. skeleton@&#x1F480;&#x1F3BA;.tk" name="email" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
+			
+			<input type="submit" value="Sign up" class="bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-md w-full p-3 duration-200 cursor-pointer">
+		</form>
+	</div>
+</body>
+</html>
