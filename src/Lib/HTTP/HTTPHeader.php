@@ -20,5 +20,14 @@ class HTTPHeader {
 			header("Location: $value");
 		}
 	}
+
+	public int $status_code {
+		get {
+			http_response_code();
+		}
+		set(int $value) {
+			http_response_code($value);
+		}
+	}
 }
 
