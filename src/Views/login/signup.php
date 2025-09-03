@@ -27,6 +27,7 @@ use App\Lib\View\View;
 				Sign up
 			</button>
 		</form>
+		<a href="/login" class="text-blue-500 underline">already have an account?</a>
 	</div>
 
 	<script>

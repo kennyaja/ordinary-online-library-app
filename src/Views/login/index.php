@@ -24,6 +24,7 @@ use App\Lib\View\View;
 				Log in
 			</button>
 		</form>
+		<a href="/signup" class="text-blue-500 underline">no account?</a>
 	</div>
 
 	<script>
