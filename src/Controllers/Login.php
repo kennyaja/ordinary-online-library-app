@@ -58,6 +58,11 @@ class Login {
 		$_SESSION["user_id"] = $user_data["id"];
 		$_SESSION["user_role"] = $user_role;
 
+		if ($user_role == "admin") {
+			$this->http_header->location = "/admin";
+			return;
+		}
+
 		$this->http_header->location = "/";
 	}
 	
