@@ -11,6 +11,7 @@ use App\Lib\View\View;
 	<h1 class="text-5xl text-center mt-48">Sign Up</h1>
 
 	<div class="w-120 max-w-screen mx-auto px-6 py-12 mt-6 rounded-lg shadow-lg bg-gray-50">
+		<div class="text-center text-red-500" id="errorDisplay"></div>
 		<form action="/api/signup" method="post">
 			<label for="username">Username</label>
 			<input type="text" placeholder="e.g. Xx_EpicGamer1_xX" name="username" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
@@ -21,8 +22,43 @@ use App\Lib\View\View;
 			<label for="email">Email</label>
 			<input type="text" placeholder="e.g. skeleton@&#x1F480;&#x1F3BA;.tk" name="email" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
 			
-			<input type="submit" value="Sign up" class="bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-md w-full p-3 duration-200 cursor-pointer">
+			<button id="submitButton" class="bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-md w-full p-3 duration-200 cursor-pointer">
+				<i class="fa-solid fa-user-plus"></i>
+				Sign up
+			</button>
 		</form>
 	</div>
+
+	<script>
+		const loginForm = document.getElementById("loginForm");
+		const errorDisplay = document.getElementById("errorDisplay");
+		const submitButton = document.getElementById("submitButton");
+
+		async function sendData() {
+			const formData = new FormData(loginForm);
+
+			const response = await fetch("/api/signup", {
+				method: "POST",
+				body: formData,
+			});
+
+			if (response.redirected) {
+				window.location.href = response.url;
+				return;
+			}
+
+			const json = await response.json();
+			errorDisplay.innerText = json.error;
+		}
+
+		loginForm.addEventListener("submit", e => {
+			e.preventDefault();
+			sendData();
+		});
+
+		submitButton.addEventListener("click", e => {
+			loginForm.submit();
+		});
+	</script>
 </body>
 </html>

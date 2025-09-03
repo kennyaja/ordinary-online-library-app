@@ -10,6 +10,9 @@
 		<a href="/admin/books" <?= $path == "/admin/books" ? "class='text-blue-500'" : "" ?>>Books</a>
 	</div>
 	<div class="flex flex-col gap-3">
-		<a href="/api/logout">log out</a>
+		<a href="/api/logout">
+			<i class="fa-solid fa-arrow-right-from-bracket"></i>
+			log out
+		</a>
 	</div>
 </aside>
