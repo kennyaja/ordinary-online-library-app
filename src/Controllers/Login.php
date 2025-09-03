@@ -2,15 +2,22 @@
 
 namespace App\Controllers;
 
+use App\Lib\HTTP\HTTPHeader;
 use App\Lib\View\View;
 use App\Models\AdminsModel;
 use App\Models\CashiersModel;
 use App\Models\UsersModel;
 
 class Login {
+	var $http_header;
+	
+	public function __construct() {
+		$this->http_header = new HTTPHeader();
+	}
+
 	public function index() {
 		if (isset($_SESSION["user_id"])) {
-			header("location: /");
+			$this->http_header->location = "/login";
 			return;
 		}
 
@@ -22,7 +29,7 @@ class Login {
 	}
 	
 	public function api_login() {
-		header("Content-Type: application/json");
+		$this->http_header->content_type = "application/json";
 
 		$users_model = new UsersModel();
 		$cashiers_model = new CashiersModel();
@@ -51,7 +58,7 @@ class Login {
 		$_SESSION["user_id"] = $user_data["id"];
 		$_SESSION["user_role"] = $user_role;
 
-		header("location: /");
+		$this->http_header->location = "/";
 	}
 	
 	public function api_logout() {
@@ -59,9 +66,10 @@ class Login {
 		unset($_SESSION["user_id"]);
 		unset($_SESSION["user_role"]);
 		
-		header("location: /");
+		$this->http_header->location = "/";
 	}
 
+	// yeah whatever ill validate the inputs later
 	public function api_signup() {
 		$users_model = new UsersModel();
 		$users_model->insert([
@@ -69,7 +77,7 @@ class Login {
 			"password_hash" => password_hash($_POST["password"], PASSWORD_DEFAULT), 
 			"email" => $_POST["email"] ?? ""]);
 
-		header("location: /login");
+		$this->http_header->location = "/login";
 		return;
 	}
 }

@@ -14,7 +14,7 @@ class Index {
 
 	public function index() {
 		if (!isset($_SESSION["user_id"])) {
-			$this->http_header->location = "login";
+			$this->http_header->location = "/login";
 			return;
 		}
 
