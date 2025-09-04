@@ -13,8 +13,13 @@ class Admin {
 	}
 
 	public function index() {
+		if (!isset($_SESSION["user_role"])) {
+			$this->http_header->status_code = 401;
+			$this->http_header->location = "/login";
+			return;
+		}
+
 		if ($_SESSION["user_role"] != "admin") {
-			//$this->http_header->location = "/login";
 			$this->http_header->status_code = 403;
 			return;
 		}
@@ -23,8 +28,13 @@ class Admin {
 	}
 
 	public function users() {
+		if (!isset($_SESSION["user_role"])) {
+			$this->http_header->status_code = 401;
+			$this->http_header->location = "/login";
+			return;
+		}
+
 		if ($_SESSION["user_role"] != "admin") {
-			//$this->http_header->location = "/login";
 			$this->http_header->status_code = 403;
 			return;
 		}
