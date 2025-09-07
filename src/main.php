@@ -33,14 +33,16 @@ $routes = require(Directory::get_full_path("src/routes.php"));
 //}
 
 if (isset($routes[$path])) {
-	if (array_key_exists("method", $routes[$path]) ) {
-		if ($routes[$path]["method"] == $_SERVER["REQUEST_METHOD"]) {
-			echo (new $routes[$path][0])->{$routes[$path][1]}();
-		} else {
-			http_response_code(404);
+	if ((array_key_exists("method", $routes[$path]) && $routes[$path]["method"] == $_SERVER["REQUEST_METHOD"]) ||
+		!array_key_exists("method", $routes[$path])
+	) {
+		try {
+			printf("%s", (new $routes[$path][0])->{$routes[$path][1]}());
+		} catch (\Throwable $th) {
+			http_response_code(500);
 		}
 	} else {
-		echo (new $routes[$path][0])->{$routes[$path][1]}();
+		http_response_code(404);
 	}
 } else {
 	http_response_code(404);
