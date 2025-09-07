@@ -12,8 +12,10 @@ return [
 
 	"/login" => [Controllers\Login::class, "index"],
 	"/signup" => [Controllers\Login::class, "signup"],
-	"/api/login" => [Controllers\Login::class, "api_login", "method" => "POST"],
+	"/api/login" => [Controllers\Login::class, "api_login", "method" => "nig"],
 	"/api/logout" => [Controllers\Login::class, "api_logout"],
 	"/api/signup" => [Controllers\Login::class, "api_signup", "method" => "POST"],
+	
+	"#status:404" => [Controllers\Error::class, "err_404"],
 ];
 

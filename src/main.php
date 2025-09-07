@@ -46,6 +46,11 @@ if (isset($routes[$path])) {
 	http_response_code(404);
 }
 
+// every status code corresponding to an error in http starts either with a 4 or 5
+// ref: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status
 if (http_response_code() >= 400) {
-	echo http_response_code();
+	$status_code_key = "#status:" . http_response_code();
+	if (isset($routes[$status_code_key])) {
+		echo (new $routes[$status_code_key][0])->{$routes[$status_code_key][1]}();
+	}
 }
