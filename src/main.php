@@ -4,15 +4,18 @@ ini_set("display_errors", 0);
 
 session_start();
 
-$path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-
 require(getcwd() . "/../vendor/autoload.php");
+
+use App\Lib\Directory\Directory;
+
+$path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+if (substr($path, -1) == '/' && $path != '/') {
+	$path = rtrim($path, '/');
+}
 
 //use Dotenv\Dotenv;
 //$dotenv = Dotenv::createImmutable(__DIR__ . "/..");
 //$dotenv->load();
-
-use App\Lib\Directory\Directory;
 
 $dotenv_vars = file(Directory::get_full_path(".env"));
 foreach ($dotenv_vars as $index => $var) {
