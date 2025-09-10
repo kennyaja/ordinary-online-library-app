@@ -56,6 +56,10 @@ if (isset($routes[$path])) {
 if (http_response_code() >= 400) {
 	$status_code_key = "#status:" . http_response_code();
 	if (isset($routes[$status_code_key])) {
-		echo (new $routes[$status_code_key][0])->{$routes[$status_code_key][1]}();
+		if ($th != null) {
+			echo (new $routes[$status_code_key][0])->{$routes[$status_code_key][1]}($th);
+		} else {
+			echo (new $routes[$status_code_key][0])->{$routes[$status_code_key][1]}();
+		}
 	}
 }

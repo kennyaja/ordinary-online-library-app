@@ -6,6 +6,7 @@ return [
 	"/" => [Controllers\Index::class, "index"],
 
 	"/j" => [Controllers\Test::class, "index"],
+	"/yeet" => [Controllers\Test::class, "yeet"],
 	
 	"/admin" => [Controllers\Admin::class, "index"],
 	"/admin/users" => [Controllers\Admin::class, "users"],
