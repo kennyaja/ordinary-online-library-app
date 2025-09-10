@@ -33,11 +33,11 @@ class Error {
 		]);
 	}
 
-	public function err_500($throwable) {
+	public function err_500() {
 		return View::get("error.php", [
 			"err" => 500,
 			"message" => "internal server error (whoops)",
-			"throwable" => $throwable,
+			"throwable" => func_get_args()[0],
 		]);
 	}
 }
