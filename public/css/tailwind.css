@@ -19,8 +19,6 @@
     --spacing: 0.25rem;
     --text-lg: 1.125rem;
     --text-lg--line-height: calc(1.75 / 1.125);
-    --text-xl: 1.25rem;
-    --text-xl--line-height: calc(1.75 / 1.25);
     --text-2xl: 1.5rem;
     --text-2xl--line-height: calc(2 / 1.5);
     --text-5xl: 3rem;
@@ -274,6 +272,9 @@
   .border-gray-500 {
     border-color: var(--color-gray-500);
   }
+  .border-red-500 {
+    border-color: var(--color-red-500);
+  }
   .bg-blue-400 {
     background-color: var(--color-blue-400);
   }
@@ -347,9 +348,6 @@
   }
   .text-red-500 {
     color: var(--color-red-500);
-  }
-  .text-red-600 {
-    color: var(--color-red-600);
   }
   .text-white {
     color: var(--color-white);
