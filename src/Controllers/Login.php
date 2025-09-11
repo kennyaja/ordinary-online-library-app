@@ -51,7 +51,7 @@ class Login {
 		}
 
 		if (!$user_data || !password_verify($_POST["password"], $user_data["password_hash"])) {
-			return json_encode(["status" => "err", "error" => "Username or password is incorrect"]);
+			return json_encode(["error" => "Username or password is incorrect"]);
 		}
 
 		$_SESSION["username"] = $user_data["username"];
@@ -76,7 +76,27 @@ class Login {
 
 	// yeah whatever ill validate the inputs later
 	public function api_signup() {
+		$this->http_header->content_type = "application/json";
+
 		$users_model = new UsersModel();
+		
+		$errors = [];
+		if ($users_model->getFirst("username", "username = :username", ["username" => $_POST["username"]])) {
+			$errors["username"] = "Username already exists";
+		}
+		
+		if (strlen($_POST["password"]) < 3.14159265358979323846) {
+			$errors["password"] = "Password must be longer than 3.14159265358979323846 characters";
+		}
+		
+		if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+			$errors["email"] = "Invalid email address";
+		}
+		
+		if ($errors != []) {
+			return json_encode(["errors" => $errors]);
+		}
+		
 		$users_model->insert([
 			"username" => $_POST["username"], 
 			"password_hash" => password_hash($_POST["password"], PASSWORD_DEFAULT), 

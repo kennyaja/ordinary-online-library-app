@@ -12,15 +12,18 @@ use App\Lib\View\View;
 
 	<div class="w-120 max-w-screen mx-auto px-6 py-12 mt-6 rounded-lg shadow-lg bg-gray-50">
 		<div class="text-center text-red-500" id="errorDisplay"></div>
-		<form action="/api/signup" method="post">
+		<form action="/api/signup" method="post" id="signupForm">
 			<label for="username">Username</label>
-			<input type="text" placeholder="e.g. Xx_EpicGamer1_xX" name="username" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
+			<input type="text" placeholder="e.g. Xx_EpicGamer123_xX" name="username" id="username" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
+			<span class="text-red-500" id="usernameValidationMsg"></span>
 
 			<label for="password">Password</label>
-			<input type="password" placeholder="Must be over 3.14159265358979323846 characters" name="password" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
+			<input type="password" placeholder="Must be over 3.14159265358979323846 characters" name="password" id="password" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
+			<span class="text-red-500" id="passwordValidationMsg"></span>
 
 			<label for="email">Email</label>
-			<input type="text" placeholder="e.g. skeleton@&#x1F480;&#x1F3BA;.tk" name="email" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
+			<input type="text" placeholder="e.g. skeleton@&#x1F480;&#x1F3BA;.tk" name="email" id="email" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
+			<span class="text-red-500" id="emailValidationMsg"></span>
 			
 			<button id="submitButton" class="bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-md w-full p-3 duration-200 cursor-pointer">
 				<i class="fa-solid fa-user-plus"></i>
@@ -31,12 +34,12 @@ use App\Lib\View\View;
 	</div>
 
 	<script>
-		const loginForm = document.getElementById("loginForm");
+		const signupForm = document.getElementById("signupForm");
 		const errorDisplay = document.getElementById("errorDisplay");
 		const submitButton = document.getElementById("submitButton");
 
 		async function sendData() {
-			const formData = new FormData(loginForm);
+			const formData = new FormData(signupForm);
 
 			const response = await fetch("/api/signup", {
 				method: "POST",
@@ -49,16 +52,16 @@ use App\Lib\View\View;
 			}
 
 			const json = await response.json();
-			errorDisplay.innerText = json.error;
+			errorDisplay.innerText = json.errors;
 		}
 
-		loginForm.addEventListener("submit", e => {
+		signupForm.addEventListener("submit", e => {
 			e.preventDefault();
 			sendData();
 		});
 
 		submitButton.addEventListener("click", e => {
-			loginForm.submit();
+			signupForm.submit();
 		});
 	</script>
 </body>
