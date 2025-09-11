@@ -25,7 +25,7 @@ use App\Lib\View\View;
 			<input type="text" placeholder="e.g. skeleton@&#x1F480;&#x1F3BA;.tk" name="email" id="email" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
 			<span class="text-red-500" id="emailValidationMsg"></span>
 			
-			<button id="submitButton" class="bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-md w-full p-3 duration-200 cursor-pointer">
+			<button class="bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-md w-full p-3 duration-200 cursor-pointer">
 				<i class="fa-solid fa-user-plus"></i>
 				Sign up
 			</button>
@@ -36,7 +36,6 @@ use App\Lib\View\View;
 	<script>
 		const signupForm = document.getElementById("signupForm");
 		const errorDisplay = document.getElementById("errorDisplay");
-		const submitButton = document.getElementById("submitButton");
 
 		async function sendData() {
 			const formData = new FormData(signupForm);
@@ -58,10 +57,6 @@ use App\Lib\View\View;
 		signupForm.addEventListener("submit", e => {
 			e.preventDefault();
 			sendData();
-		});
-
-		submitButton.addEventListener("click", e => {
-			signupForm.submit();
 		});
 	</script>
 </body>

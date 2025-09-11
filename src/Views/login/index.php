@@ -19,7 +19,7 @@ use App\Lib\View\View;
 			<label for="password">Password</label>
 			<input type="password" placeholder="Must be over 3.14159265358979323846 characters" name="password" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
 			
-			<button id="submitButton" class="bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-md w-full p-3 duration-200 cursor-pointer">
+			<button class="bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-md w-full p-3 duration-200 cursor-pointer">
 				<i class="fa-solid fa-arrow-right-to-bracket"></i>
 				Log in
 			</button>
@@ -30,7 +30,6 @@ use App\Lib\View\View;
 	<script>
 		const loginForm = document.getElementById("loginForm");
 		const errorDisplay = document.getElementById("errorDisplay");
-		const submitButton = document.getElementById("submitButton");
 
 		async function sendData() {
 			const formData = new FormData(loginForm);
@@ -52,10 +51,6 @@ use App\Lib\View\View;
 		loginForm.addEventListener("submit", e => {
 			e.preventDefault();
 			sendData();
-		});
-
-		submitButton.addEventListener("click", e => {
-			loginForm.submit();
 		});
 	</script>
 </body>
