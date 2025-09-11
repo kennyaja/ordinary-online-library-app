@@ -15,7 +15,7 @@ use App\Lib\View\View;
 		<?php
 			if ($throwable != null) {
 				?>
-					<p class="text-center mt-6 text-red-600"><?= get_class($throwable) . ": " . $throwable->getMessage() ?></p>
+					<p class="text-center mt-6 text-red-500"><?= get_class($throwable) . ": " . $throwable->getMessage() ?></p>
 					<p class="text-center mt-2 text-gray-400"><?= preg_replace("/(?!^#)#/", "<br>#", $throwable->getTraceAsString()) ?></p>
 				<?php
 			}
