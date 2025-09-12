@@ -15,19 +15,19 @@ use App\Lib\View\View;
 		<form action="/api/signup" method="post" id="signupForm">
 			<div class="mb-3">
 				<label for="username">Username</label>
-				<input type="text" placeholder="e.g. Xx_EpicGamer123_xX" name="username" id="username" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1">
+				<input type="text" placeholder="e.g. Xx_EpicGamer123_xX" name="username" id="username" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1" autocomplete="off">
 				<div class="text-red-500" id="usernameValidationMsg"></div>
 			</div>
 
 			<div class="mb-3">
 				<label for="password">Password</label>
-				<input type="password" placeholder="Must be over 3.14159265358979323846 characters" name="password" id="password" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1">
+				<input type="password" placeholder="Must be over &#960; (3.14159265...) characters" name="password" id="password" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1" autocomplete="off">
 				<div class="text-red-500" id="passwordValidationMsg"></div>
 			</div>
 
 			<div class="mb-3">
 				<label for="email">Email</label>
-				<input type="text" placeholder="e.g. skeleton@&#x1F480;&#x1F3BA;.tk" name="email" id="email" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1">
+				<input type="text" placeholder="e.g. skeleton@&#x1F480;&#x1F3BA;.tk" name="email" id="email" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1" autocomplete="off">
 				<div class="text-red-500" id="emailValidationMsg"></div>
 			</div>
 			

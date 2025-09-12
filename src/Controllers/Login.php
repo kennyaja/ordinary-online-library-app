@@ -85,8 +85,8 @@ class Login {
 			$errors["username"] = "Username already exists";
 		}
 		
-		if (strlen($_POST["password"]) < 3.14159265358979323846) {
-			$errors["password"] = "Password must be longer than 3.14159265358979323846 characters";
+		if (strlen($_POST["password"]) < 3.14159265) {
+			$errors["password"] = "Password must be over &#960; (3.14159265...) characters";
 		}
 		
 		if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {

@@ -17,7 +17,7 @@ use App\Lib\View\View;
 			<input type="text" placeholder="e.g. Xx_EpicGamer1_xX" name="username" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
 
 			<label for="password">Password</label>
-			<input type="password" placeholder="Must be over 3.14159265358979323846 characters" name="password" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
+			<input type="password" placeholder="Must be over &#960; (3.14159265...) characters" name="password" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
 			
 			<button class="bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-md w-full p-3 duration-200 cursor-pointer">
 				<i class="fa-solid fa-arrow-right-to-bracket"></i>
