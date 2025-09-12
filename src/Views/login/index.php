@@ -11,7 +11,7 @@ use App\Lib\View\View;
 	<h1 class="text-5xl text-center mt-48">Login</h1>
 
 	<div class="w-120 max-w-screen mx-auto px-6 py-12 mt-6 rounded-lg shadow-lg bg-gray-50">
-		<div class="text-center text-red-500" id="errorDisplay"></div>
+		<div class="text-center rounded-md not-empty:bg-red-200 not-empty:border-2 not-empty:border-red-500 not-empty:py-4 not-empty:mb-3" id="errorDisplay"></div>
 		<form action="/api/login" method="post" id="loginForm">
 			<label for="username">Username</label>
 			<input type="text" placeholder="e.g. Xx_EpicGamer1_xX" name="username" class="bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1 mb-3">
