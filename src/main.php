@@ -7,6 +7,9 @@ session_start();
 require(getcwd() . "/../vendor/autoload.php");
 
 use App\Lib\Directory\Directory;
+use App\Lib\HTTP\HTTPHeader;
+
+$http_header = new HTTPHeader();
 
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 if (substr($path, -1) == '/' && $path != '/') {
@@ -53,7 +56,7 @@ if (isset($routes[$path])) {
 
 // every status code corresponding to an error in http starts either with a 4 or 5
 // ref: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status
-if (http_response_code() >= 400) {
+if (http_response_code() >= 400 && $http_header->content_type == "text/html") {
 	$status_code_key = "#status:" . http_response_code();
 	if (isset($routes[$status_code_key])) {
 		if ($th != null && $_ENV["app_environment"] == "dev") {
