@@ -49,10 +49,10 @@ use App\Lib\View\View;
 
 			if (msg == null || msg == undefined) {
 				field.classList.remove("border-red-500");
-				fieldValidationMsg.innerText = "";
+				fieldValidationMsg.innerHTML = "";
 			} else {
 				field.classList.add("border-red-500");
-				fieldValidationMsg.innerText = msg;
+				fieldValidationMsg.innerHTML = msg;
 			}
 		}
 
