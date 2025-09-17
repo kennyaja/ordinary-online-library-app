@@ -3,14 +3,7 @@
 namespace App\Lib\Database;
 
 abstract class Model extends Database {
-	protected string $table = '' {
-		get {
-			return $this->table;
-		}
-		set(string $value) {
-			$this->table = $value;
-		}
-	}
+	protected string $table = '';
 	
 	function __construct() {
 		parent::__construct();
