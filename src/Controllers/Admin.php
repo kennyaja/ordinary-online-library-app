@@ -13,14 +13,9 @@ class Admin {
 	}
 
 	public function index() {
-		if (!isset($_SESSION["user_role"])) {
+		if (!isset($_SESSION["admin_id"])) {
 			$this->http_header->status_code = 401;
-			$this->http_header->location = "/login";
-			return;
-		}
-
-		if ($_SESSION["user_role"] != "admin") {
-			$this->http_header->status_code = 403;
+			$this->http_header->location = "/admin/login";
 			return;
 		}
 		
@@ -28,17 +23,12 @@ class Admin {
 	}
 
 	public function users() {
-		if (!isset($_SESSION["user_role"])) {
+		if (!isset($_SESSION["admin_id"])) {
 			$this->http_header->status_code = 401;
-			$this->http_header->location = "/login";
+			$this->http_header->location = "/admin/login";
 			return;
 		}
 
-		if ($_SESSION["user_role"] != "admin") {
-			$this->http_header->status_code = 403;
-			return;
-		}
-		
 		return View::get("admin/users.php", ["title" => "admin page xd"]);
 	}
 }

@@ -8,7 +8,7 @@ use App\Lib\View\View;
 	<?= View::get("components/metadata.php", ["title" => $title]) ?>
 </head>
 <body>
-	<h1 class="text-5xl text-center mt-48">Login</h1>
+	<h1 class="text-5xl text-center mt-48">Login <span class="text-base">(admin ver)</span></h1>
 
 	<div class="w-120 max-w-screen mx-auto px-6 py-12 mt-6 rounded-lg shadow-lg bg-gray-50">
 		<div class="text-center rounded-md not-empty:bg-red-200 not-empty:border-2 not-empty:border-red-500 not-empty:py-4 not-empty:mb-3" id="errorDisplay"></div>
@@ -26,8 +26,6 @@ use App\Lib\View\View;
 		</form>
 		<a href="/signup" class="text-blue-500 underline">no account?</a>
 	</div>
-	
-	<a href="/admin/login" class="fixed bottom-1 right-1 text-blue-500 underline text-xs">very very secret admin page</a>
 
 	<script>
 		const loginForm = document.getElementById("loginForm");
@@ -36,7 +34,7 @@ use App\Lib\View\View;
 		async function sendData() {
 			const formData = new FormData(loginForm);
 
-			const response = await fetch("/api/login", {
+			const response = await fetch("/api/admin_login", {
 				method: "POST",
 				body: formData,
 			});

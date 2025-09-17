@@ -24,6 +24,14 @@ class Login {
 		return View::get("login/index.php", ["title" => "Log In"]);
 	}
 
+	public function admin_login() {
+		if (isset($_SESSION["admin_id"])) {
+			$this->http_header->location = "/admin";
+		}
+
+		return View::get("admin/login.php", ["title" => "Log in"]);
+	}
+
 	public function signup() {
 		return View::get("login/signup.php", ["title" => "Sign Up"]);
 	}
@@ -38,17 +46,16 @@ class Login {
 		$user_data = $users_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
 		$user_role = "user";
 		
-		// first iteration (dang it why does the teacher want a discrete table for each account role)
+		// dang it why does the teacher want a discrete table for each account role
 		if (!$user_data) {
 			$user_data = $cashiers_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
 			$user_role = "cashier";
 		}
 		
-		// second iteration
-		if (!$user_data) {
-			$user_data = $admins_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
-			$user_role = "admin";
-		}
+		//if (!$user_data) {
+		//	$user_data = $admins_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
+		//	$user_role = "admin";
+		//}
 
 		if (!$user_data || !password_verify($_POST["password"], $user_data["password_hash"])) {
 			return json_encode(["error" => "Username or password is incorrect"]);
@@ -58,11 +65,29 @@ class Login {
 		$_SESSION["user_id"] = $user_data["id"];
 		$_SESSION["user_role"] = $user_role;
 
-		if ($user_role == "admin") {
-			$this->http_header->location = "/admin";
-			return;
-		}
+		//if ($user_role == "admin") {
+		//	$this->http_header->location = "/admin";
+		//	return;
+		//}
 
+		$this->http_header->location = "/";
+	}
+	
+	public function api_admin_login() {
+		$this->http_header->content_type = "application/json";
+
+		$admins_model = new AdminsModel();
+		
+		$admin_data = $admins_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
+		
+		if (!$admin_data || !password_verify($_POST["password"], $admin_data["password_hash"])) {
+			return json_encode(["error" => "Username or password is incorrect"]);
+		}
+		
+		$_SESSION["admin_username"] = $admin_data["username"];
+		$_SESSION["admin_id"] = $admin_data["id"];
+		//$_SESSION["user_role"] = $user_role;
+		
 		$this->http_header->location = "/";
 	}
 	
@@ -72,6 +97,13 @@ class Login {
 		unset($_SESSION["user_role"]);
 		
 		$this->http_header->location = "/";
+	}
+	
+	public function api_admin_logout() {
+		unset($_SESSION["admin_username"]);
+		unset($_SESSION["admin_id"]);
+		
+		$this->http_header->location = "/admin";
 	}
 
 	// yeah whatever ill validate the inputs later
