@@ -43,20 +43,16 @@ class Login {
 		$cashiers_model = new CashiersModel();
 		$admins_model = new AdminsModel();
 
-		$user_data = $users_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
+		// $user_data = $users_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
+		$user_data = $users_model->where("username", $_POST["username"])->getFirst();
 		$user_role = "user";
 		
 		// dang it why does the teacher want a discrete table for each account role
 		if (!$user_data) {
-			$user_data = $cashiers_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
+			$user_data = $cashiers_model->where("username", $_POST["username"])->getFirst();
 			$user_role = "cashier";
 		}
 		
-		//if (!$user_data) {
-		//	$user_data = $admins_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
-		//	$user_role = "admin";
-		//}
-
 		if (!$user_data || !password_verify($_POST["password"], $user_data["password_hash"])) {
 			return json_encode(["error" => "Username or password is incorrect"]);
 		}
@@ -64,11 +60,6 @@ class Login {
 		$_SESSION["username"] = $user_data["username"];
 		$_SESSION["user_id"] = $user_data["id"];
 		$_SESSION["user_role"] = $user_role;
-
-		//if ($user_role == "admin") {
-		//	$this->http_header->location = "/admin";
-		//	return;
-		//}
 
 		$this->http_header->location = "/";
 	}
@@ -78,7 +69,7 @@ class Login {
 
 		$admins_model = new AdminsModel();
 		
-		$admin_data = $admins_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
+		$admin_data = $admins_model->where("username", $_POST["username"])->getFirst();
 		
 		if (!$admin_data || !password_verify($_POST["password"], $admin_data["password_hash"])) {
 			return json_encode(["error" => "Username or password is incorrect"]);
@@ -86,9 +77,8 @@ class Login {
 		
 		$_SESSION["admin_username"] = $admin_data["username"];
 		$_SESSION["admin_id"] = $admin_data["id"];
-		//$_SESSION["user_role"] = $user_role;
 		
-		$this->http_header->location = "/";
+		$this->http_header->location = "/admin";
 	}
 	
 	public function api_logout() {
@@ -103,7 +93,7 @@ class Login {
 		unset($_SESSION["admin_username"]);
 		unset($_SESSION["admin_id"]);
 		
-		$this->http_header->location = "/admin";
+		$this->http_header->location = "/admin/login";
 	}
 
 	// yeah whatever ill validate the inputs later
@@ -113,7 +103,8 @@ class Login {
 		$users_model = new UsersModel();
 		
 		$errors = [];
-		if ($users_model->getFirst("username", "username = :username", ["username" => $_POST["username"]])) {
+
+		if ($users_model->where("username", $_POST["username"])->getFirst()) {
 			$errors["username"] = "Username already exists";
 		}
 		

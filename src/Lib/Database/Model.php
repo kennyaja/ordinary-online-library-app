@@ -9,18 +9,33 @@ abstract class Model extends Database {
 		parent::__construct();
 	}
 
-	public function getAll(string $column_name = "*", string|null $condition = null, array|null $params = null) {
-		$query_str = "SELECT $column_name FROM $this->table";
-		if ($condition != null) {
-			$query_str .= " WHERE $condition";
+	private string $query_str = "";
+
+	private array $query_params = [];
+	
+	public function where(string $key, string $value, string|null $comparison_operator = "=") {
+		if ($this->query_str == "") {
+			$this->query_str = "SELECT * FROM $this->table";
 		}
-		$select_query = $this->db->prepare($query_str);
-		$select_query->execute($params);
+
+		$this->query_str .= " WHERE $key $comparison_operator :$key";
+
+		$this->query_params[$key] = $value;
+		return $this;
+	}
+	
+	public function getAll() {
+		$select_query = $this->db->prepare($this->query_str);
+		$select_query->execute($this->query_params);
+
+		$this->query_str = "";
+		$this->query_params = [];
+
 		return $select_query->fetchAll();
 	}
 	
-	public function getFirst(string $column_name = "*", string|null $condition = null, array|null $params = null) {
-		return $this->getAll($column_name, $condition, $params)[0] ?? false;
+	public function getFirst() {
+		return $this->getAll()[0];
 	}
 	
 	public function insert(array $params) {

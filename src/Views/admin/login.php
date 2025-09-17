@@ -24,9 +24,9 @@ use App\Lib\View\View;
 				Log in
 			</button>
 		</form>
-		<a href="/signup" class="text-blue-500 underline">no account?</a>
 	</div>
 
+	<a href="/login" class="fixed bottom-1 right-1 text-blue-500 underline text-xs">not so secret user page</a>
 	<script>
 		const loginForm = document.getElementById("loginForm");
 		const errorDisplay = document.getElementById("errorDisplay");
