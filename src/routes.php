@@ -10,6 +10,7 @@ return [
 	
 	"/admin" => [Controllers\Admin::class, "index"],
 	"/admin/users" => [Controllers\Admin::class, "users"],
+	"/admin/books" => [Controllers\Admin::class, "books"],
 	
 	"/login" => [Controllers\Login::class, "index"],
 	"/signup" => [Controllers\Login::class, "signup"],

@@ -2,6 +2,8 @@
 
 namespace App\Lib\Database;
 
+use Exception;
+
 abstract class Model extends Database {
 	protected string $table = '';
 	
@@ -25,6 +27,10 @@ abstract class Model extends Database {
 	}
 	
 	public function getAll() {
+		if ($this->query_str == "") {
+			$this->query_str = "SELECT * FROM $this->table";
+		}
+
 		$select_query = $this->db->prepare($this->query_str);
 		$select_query->execute($this->query_params);
 
@@ -39,6 +45,10 @@ abstract class Model extends Database {
 	}
 	
 	public function insert(array $params) {
+		if (array_is_list($params)) {
+			throw new Exception("Parameter must be an associative array");
+		}
+
 		$columns = join(",", array_keys($params));
 		$param_names = ":" . join(",:", array_keys($params));
 
