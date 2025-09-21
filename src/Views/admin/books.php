@@ -17,7 +17,7 @@ use App\Lib\View\View;
 				const globglogabgalab = document.getElementById("globglogabgalab");
 
 				function updateGlobglogabgalabWidthAndHeight() {
-					let width = (window.innerWidth / 2)
+					let width = window.innerWidth - 32; // 1rem (16px in this case) of padding for each side
 					let height = width * (9 / 16);
 
 					globglogabgalab.width = Math.min(width, 640);
