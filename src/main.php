@@ -23,7 +23,7 @@ if (substr($path, -1) == '/' && $path != '/') {
 $dotenv_vars = file(Directory::get_full_path(".env"));
 foreach ($dotenv_vars as $index => $var) {
 	$key_value_arr = explode("=", trim($var), 2);
-	$_ENV[$key_value_arr[0]] = $key_value_arr[1];
+	$_ENV[$key_value_arr[0]] = $key_value_arr[1] ?? "";
 }
 
 $routes = require(Directory::get_full_path("src/routes.php"));
