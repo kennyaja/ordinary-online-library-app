@@ -5,7 +5,7 @@ namespace App\Lib\HTTP;
 class HTTPHeader {
 	public string $content_type {
 		get {
-			return getallheaders()["Content-Type"] ?? "";
+			return getallheaders()["Content-Type"] ?? "text/html";
 		}
 		set(string $value) {
 			header("Content-Type: $value");
