@@ -14,6 +14,7 @@ return [
 	"/api/admin/users_list" => [Controllers\Admin::class, "api_users_list"],
 	"/api/admin/books_list" => [Controllers\Admin::class, "api_books_list"],
 	"/api/admin/submit_book" => [Controllers\Admin::class, "api_submit_book"],
+	"/api/admin/delete_book" => [Controllers\Admin::class, "api_delete_book"],
 	
 	"/login" => [Controllers\Login::class, "index"],
 	"/signup" => [Controllers\Login::class, "signup"],

@@ -58,6 +58,12 @@ use App\Lib\View\View;
 	</div>
 
 	<script>
+		function loadTable() {
+
+		}
+	</script>
+
+	<script>
 		const modal = el("#modal");
 		const modalContent = el("#modalContent");
 
@@ -145,7 +151,7 @@ use App\Lib\View\View;
 				const actual_content_cdn_url = `${location.protocol}//${book.content_cdn_url.replace("{server_addr}", location.host)}`;
 
 				table_contents.append(
-					newEl("tr", null, {"class": "*:p-3 border-b-gray-300 border-b-1"}, [
+					newEl("tr", null, {"class": "*:p-3 border-b-gray-300 border-b-1", "id": `book_${book.id}`}, [
 						newEl("th", index + 1),
 						newEl("td", book.title),
 						newEl("td", book.author),
@@ -174,6 +180,18 @@ use App\Lib\View\View;
 				button.addEventListener('click', () => {
 					if (button.dataset.action == "update") {
 						toggleModal();
+					}
+
+					if (button.dataset.action == "delete") {
+						const formdata = new FormData();
+						formdata.append("id", button.dataset.bookid);
+
+						fetch("/api/admin/delete_book", {
+							method: "POST",
+							body: formdata,
+						});
+
+						el(`#book_${button.dataset.bookid}`).remove();
 					}
 				})
 			})

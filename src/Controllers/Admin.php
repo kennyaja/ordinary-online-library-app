@@ -87,4 +87,14 @@ class Admin {
 
 		return json_encode(["ok"]);
 	}
+
+	public function api_delete_book() {
+		$this->http_header->content_type = "text/json";
+
+		$books_model = new BooksModel();
+
+		$books_model->delete()->where("id", $_POST["id"])->execute();
+
+		return json_encode(["ok"]);
+	}
 }
