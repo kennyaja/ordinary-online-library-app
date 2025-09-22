@@ -12,6 +12,11 @@ use App\Lib\HTTP\HTTPHeader;
 $http_header = new HTTPHeader();
 
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+
+if (!$path) {
+	$path = "/";
+}
+
 if (substr($path, -1) == '/' && $path != '/') {
 	$path = rtrim($path, '/');
 }
