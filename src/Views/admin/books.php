@@ -40,29 +40,8 @@ use App\Lib\View\View;
 						<th></th>
 					</tr>
 				</thead>
-				<tbody>
-					<?php
-						$i = 0;
-						foreach ($books as $book) {
-							$i++;
-							echo <<<HTML
-								<tr class="*:p-3 border-b-gray-300 border-b-1">
-									<th>$i</th>
-									<td>$book[title]</td>
-									<td>$book[author]</td>
-									<td class="max-w-64"><a href="$book[content_cdn_url]" class="text-blue-500 underline cursor-pointer">$book[content_cdn_url]</a></td>
-									<td class="grid lg:grid-flow-col gap-1">
-										<button class="update-button px-4 py-2 rounded-md text-white bg-blue-400 hover:bg-blue-500 cursor-pointer" data-bookid="$book[id]" data-action="update">
-											update
-										</button>
-										<button class="update-button px-4 py-2 rounded-md text-white bg-red-500 hover:bg-red-600 cursor-pointer" data-bookid="$book[id]" data-action="delete">
-											BEGONE
-										</button>
-									</td>
-								</tr>
-							HTML;
-						}
-					?>
+				<tbody id="table_contents">
+					<!-- js content -->
 				</tbody>
 			</table>
 		</div>
@@ -82,15 +61,53 @@ use App\Lib\View\View;
 	</script>
 
 	<script>
-		const buttons = document.querySelectorAll(".update-button");
+		const table_contents = document.getElementById("table_contents");
 
-		buttons.forEach(button => {
-			button.addEventListener('click', () => {
-				if (button.dataset.action == "update") {
-					modal.classList.remove("invisible", "opacity-0");
-				}
+		async function getBooksList() {
+			const response = await fetch("/api/admin/books_list", {
+				method: "POST",
+			});
+
+			const json = await response.json();
+			return json;
+		}
+
+		getBooksList().then((books_list) => {
+			books_list.forEach((book, index) => {
+				table_contents.append(
+					newEl("tr", null, {"class": "*:p-3 border-b-gray-300 border-b-1"}, [
+						newEl("th", index + 1),
+						newEl("td", book.title),
+						newEl("td", book.author),
+						newEl("td", null, {"class": "max-w-64"}, [
+							newEl("a", book.content_cdn_url, {"class": "text-blue-500", "href": book.content_cdn_url}, null),
+						]),
+						newEl("td", null, {"class": "grid lg:grid-flow-col gap-1"}, [
+							newEl("button", "update", {
+								"class": "update-button px-3 py-2 rounded-md text-white bg-blue-400 hover:bg-blue-500 cursor-pointer",
+								"data-bookid": book.id,
+								"data-action": "update",
+							}, null),
+							newEl("button", "BEGONE", {
+								"class": "update-button px-3 py-2 rounded-md text-white bg-red-500 hover:bg-red-600 cursor-pointer",
+								"data-bookid": book.id,
+								"data-action": "delete",
+							}, null)
+						]),
+					]),
+				)
 			})
-		})
+
+			const buttons = document.querySelectorAll(".update-button");
+
+			buttons.forEach(button => {
+				button.addEventListener('click', () => {
+					if (button.dataset.action == "update") {
+						modal.classList.remove("invisible", "opacity-0");
+					}
+				})
+			})
+		});
 	</script>
 </body>
 </html>

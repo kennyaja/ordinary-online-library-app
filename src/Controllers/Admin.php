@@ -31,11 +31,8 @@ class Admin {
 			return;
 		}
 
-		$users_model = new UsersModel();
-
 		return View::get("admin/users.php", [
 			"title" => "admin page xd", 
-			"users" => $users_model->getAll(),
 		]);
 	}
 
@@ -46,11 +43,22 @@ class Admin {
 			return;
 		}
 
-		$books_model = new BooksModel();
-
 		return View::get("admin/books.php", [
 			"title" => "admin page xd", 
-			"books" => $books_model->getAll(),
 		]);
+	}
+
+	public function api_users_list() {
+		$this->http_header->content_type = "text/json";
+
+		$users_model = new UsersModel();
+		return json_encode($users_model->getAll());
+	}
+
+	public function api_books_list() {
+		$this->http_header->content_type = "text/json";
+
+		$books_model = new BooksModel();
+		return json_encode($books_model->getAll());
 	}
 }

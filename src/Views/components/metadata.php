@@ -3,3 +3,4 @@
 <title><?= $data["title"] ?? "Document" ?></title>
 <link rel="stylesheet" href="/css/tailwind.css">
 <link rel="stylesheet" href="/css/fontawesome/all.min.css">
+<script src="/js/html_builder.js"></script>

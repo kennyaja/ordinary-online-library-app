@@ -3,6 +3,7 @@
 namespace App\Lib\Database;
 
 use Exception;
+use PDO;
 
 abstract class Model extends Database {
 	protected string $table = '';
@@ -37,7 +38,7 @@ abstract class Model extends Database {
 		$this->query_str = "";
 		$this->query_params = [];
 
-		return $select_query->fetchAll();
+		return $select_query->fetchAll(mode: PDO::FETCH_ASSOC);
 	}
 	
 	public function getFirst() {
