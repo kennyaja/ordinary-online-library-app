@@ -77,7 +77,7 @@ abstract class Model extends Database {
 		return $this;
 	}
 
-	public function delete(int $primary_key_value) {
+	public function delete() {
 		$this->query_str = "DELETE FROM $this->table";
 		return $this;
 	}
