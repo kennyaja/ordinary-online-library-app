@@ -19,3 +19,7 @@ function newEl(tagName, innerHTML, properties, children) {
 
 	return element;
 }
+
+function el(selector) {
+	return document.querySelector(selector);
+}

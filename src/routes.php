@@ -13,6 +13,7 @@ return [
 	"/admin/books" => [Controllers\Admin::class, "books"],
 	"/api/admin/users_list" => [Controllers\Admin::class, "api_users_list"],
 	"/api/admin/books_list" => [Controllers\Admin::class, "api_books_list"],
+	"/api/admin/submit_book" => [Controllers\Admin::class, "api_submit_book"],
 	
 	"/login" => [Controllers\Login::class, "index"],
 	"/signup" => [Controllers\Login::class, "signup"],
@@ -23,6 +24,7 @@ return [
 	"/admin/login" => [Controllers\Login::class, "admin_login"],
 	"/api/admin_login" => [Controllers\Login::class, "api_admin_login", "method" => "POST"],
 	"/api/admin_logout" => [Controllers\Login::class, "api_admin_logout"],
+	
 	
 	"#status:400" => [Controllers\Error::class, "err_400"],
 	"#status:401" => [Controllers\Error::class, "err_401"],
