@@ -83,7 +83,7 @@ class Admin {
 			"author" => $_POST["author"],
 			"description" => $_POST["description"],
 			"content_cdn_url" => "{server_addr}/" . $file_path,
-		]);
+		])->execute();
 
 		return json_encode(["ok"]);
 	}

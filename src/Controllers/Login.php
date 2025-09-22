@@ -123,7 +123,8 @@ class Login {
 		$users_model->insert([
 			"username" => $_POST["username"], 
 			"password_hash" => password_hash($_POST["password"], PASSWORD_DEFAULT), 
-			"email" => $_POST["email"] ?? ""]);
+			"email" => $_POST["email"] ?? ""
+		])->execute();
 
 		$this->http_header->location = "/login";
 		return;
