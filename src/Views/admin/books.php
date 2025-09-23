@@ -99,7 +99,13 @@ use App\Lib\View\View;
 					]),
 				]),
 
-				newEl("form", null, {"method": "post", "enctype": "multipart/form-data", "class": "mt-5 grid grid-flow-row gap-3", "action": "/api/books/submit"}, [
+				newEl("form", null, {
+					"method": "post", 
+					"enctype": "multipart/form-data", 
+					"class": "mt-5 grid grid-flow-row gap-3", 
+					"action": "/api/books/submit", 
+					"id": "book_submit_form",
+				}, [
 					newEl("div", null, {"class": "grid grid-flow-col grid-cols-auto gap-4"}, [
 						newEl("div", null, null, [
 							newEl("label", "title", {"for": "title"}),

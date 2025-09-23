@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Lib\HTTP\HTTPHeader;
+use App\Lib\View\View;
 use App\Models\BooksModel;
 
 class Books {
@@ -10,15 +11,26 @@ class Books {
 		$this->books_model = new BooksModel();
 		$this->http_header = new HTTPHeader();
 	}
+
+	public function details() {
+		return View::get("books/details.php");
+	}
 	
-	public function list() {
+	public function api_list() {
 		$this->http_header->content_type = "text/json";
 
 		$books_model = new BooksModel();
 		return json_encode($books_model->getAll());
 	}
 	
-	public function submit() {
+	public function api_details() {
+		$this->http_header->content_type = "text/json";
+
+		$books_model = new BooksModel();
+		return json_encode($books_model->where("id", $_GET["id"])->getFirst() ?? ["error" => "Book does not exist"]);
+	}
+	
+	public function api_submit() {
 		$this->http_header->content_type = "text/json";
 
 		$books_model = new BooksModel();
@@ -29,22 +41,33 @@ class Books {
 		if (!isset($_FILES["content_pdf_file"]) || empty($_FILES["content_pdf_file"])) {
 			$errors["content_pdf_file"] = "PDF copy of book must be provided";
 		}
+		
+		if ($_FILES["content_pdf_file"]["type"] != "application/pdf") {
+			$errors["content_pdf_file"] = "Uploaded file has type of $_FILES[content_pdf_file][type], which is not 'application/pdf'";
+		}
+		
+		if ($errors != null) {
+			return json_encode($errors);
+		}
 
-		$file_path = sprintf("uploads/%d_%s", time(), $_FILES["content_pdf_file"]["name"]);
+		$pdf_file_path = sprintf("uploads/pdf/%d_%s", time(), $_FILES["content_pdf_file"]["name"]);
+		$image_file_path = sprintf("uploads/img/book_cover/%d_%s", time(), $_FILES["image_file"]["name"]);
 
-		move_uploaded_file($_FILES["content_pdf_file"]["tmp_name"], $file_path);
+		move_uploaded_file($_FILES["content_pdf_file"]["tmp_name"], $pdf_file_path);
+		move_uploaded_file($_FILES["image_file"]["tmp_name"], $image_file_path);
 
 		$books_model->insert([
 			"title" => $_POST["title"],
 			"author" => $_POST["author"],
 			"description" => $_POST["description"],
-			"content_cdn_url" => "{server_addr}/" . $file_path,
+			"content_cdn_url" => "{server_addr}/" . $pdf_file_path,
+			"image_url" => "{server_addr}/" . $image_file_path,
 		])->execute();
 
 		return json_encode(["ok"]);
 	}
 	
-	public function delete() {
+	public function api_delete() {
 		$this->http_header->content_type = "text/json";
 
 		$books_model = new BooksModel();
