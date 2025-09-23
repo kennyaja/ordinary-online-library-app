@@ -11,10 +11,11 @@ return [
 	"/admin" => [Controllers\Admin::class, "index"],
 	"/admin/users" => [Controllers\Admin::class, "users"],
 	"/admin/books" => [Controllers\Admin::class, "books"],
+	
+	"/api/books/list" => [Controllers\Books::class, "list"],
+	"/api/books/submit" => [Controllers\Books::class, "submit"],
+	"/api/books/delete" => [Controllers\Books::class, "delete"],
 	"/api/admin/users_list" => [Controllers\Admin::class, "api_users_list"],
-	"/api/admin/books_list" => [Controllers\Admin::class, "api_books_list"],
-	"/api/admin/submit_book" => [Controllers\Admin::class, "api_submit_book"],
-	"/api/admin/delete_book" => [Controllers\Admin::class, "api_delete_book"],
 	
 	"/login" => [Controllers\Login::class, "index"],
 	"/signup" => [Controllers\Login::class, "signup"],

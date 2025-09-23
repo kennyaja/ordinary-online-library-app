@@ -99,7 +99,7 @@ use App\Lib\View\View;
 					]),
 				]),
 
-				newEl("form", null, {"method": "post", "enctype": "multipart/form-data", "class": "mt-5 grid grid-flow-row gap-3", "action": "/api/admin/submit_book"}, [
+				newEl("form", null, {"method": "post", "enctype": "multipart/form-data", "class": "mt-5 grid grid-flow-row gap-3", "action": "/api/books/submit"}, [
 					newEl("div", null, {"class": "grid grid-flow-col grid-cols-auto gap-4"}, [
 						newEl("div", null, null, [
 							newEl("label", "title", {"for": "title"}),
@@ -138,7 +138,7 @@ use App\Lib\View\View;
 		const table_contents = document.getElementById("table_contents");
 
 		async function getBooksList() {
-			const response = await fetch("/api/admin/books_list", {
+			const response = await fetch("/api/books/list", {
 				method: "POST",
 			});
 
@@ -186,7 +186,7 @@ use App\Lib\View\View;
 						const formdata = new FormData();
 						formdata.append("id", button.dataset.bookid);
 
-						fetch("/api/admin/delete_book", {
+						fetch("/api/books/delete", {
 							method: "POST",
 							body: formdata,
 						});
