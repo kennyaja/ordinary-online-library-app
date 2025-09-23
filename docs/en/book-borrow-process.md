@@ -15,4 +15,9 @@ and here is a flowchart for the returning process:
 
 here is the activity diagram for the borrowing and returning process:
 
-<img width="243" height="809" alt="activity" src="https://github.com/user-attachments/assets/9134d13b-deea-403f-97b7-6f38320eca56" />
+<img width="243" height="809" alt="activity" src="https://github.com/user-attachments/assets/9134d13b-deea-403f-97b7-6f38320eca56" h
+
+
+here is the sequence diagram for deleting books (i should put this in a different place)
+
+<img width="343" height="302" alt="sequence" src="https://github.com/user-attachments/assets/4b730fa3-8a29-44c5-a194-16dd2b02d264" />
