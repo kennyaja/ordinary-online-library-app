@@ -105,6 +105,16 @@ use App\Lib\View\View;
 					"class": "mt-5 grid grid-flow-row gap-3", 
 					"action": "/api/books/submit", 
 					"id": "book_submit_form",
+					"_event_submit": (event, el) => {
+						event.preventDefault();
+						
+						const formData = new FormData(el);
+						
+						fetch("/api/books/submit", {
+							method: "POST",
+							body: formData,
+						});
+					},
 				}, [
 					newEl("div", null, {"class": "grid grid-flow-col grid-cols-auto gap-4"}, [
 						newEl("div", null, null, [
