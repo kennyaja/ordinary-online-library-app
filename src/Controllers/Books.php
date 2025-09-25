@@ -7,6 +7,9 @@ use App\Lib\View\View;
 use App\Models\BooksModel;
 
 class Books {
+	var $books_model;
+	var $http_header;
+
 	function __construct() {
 		$this->books_model = new BooksModel();
 		$this->http_header = new HTTPHeader();
@@ -38,16 +41,14 @@ class Books {
 		$errors = [];
 
 		// idk maybe add external url support for this maybe perhaps
-		if (!isset($_FILES["content_pdf_file"]) || empty($_FILES["content_pdf_file"])) {
+		if (!isset($_FILES["content_pdf_file"]) || empty($_FILES["content_pdf_file"]) || $_FILES["content_pdf_file"]["error"] == 4) {
 			$errors["content_pdf_file"] = "PDF copy of book must be provided";
-		}
-		
-		if ($_FILES["content_pdf_file"]["type"] != "application/pdf") {
-			$errors["content_pdf_file"] = "Uploaded file has type of $_FILES[content_pdf_file][type], which is not 'application/pdf'";
+		} elseif ($_FILES["content_pdf_file"]["type"] != "application/pdf") {
+			$errors["content_pdf_file"] = "Uploaded file has type of " . $_FILES["content_pdf_file"]["type"] . ", which is not 'application/pdf'";
 		}
 		
 		if ($errors != null) {
-			return json_encode($errors);
+			return json_encode(["status" => "error", "errors" => $errors]);
 		}
 
 		$pdf_file_path = sprintf("uploads/pdf/%d_%s", time(), $_FILES["content_pdf_file"]["name"]);
