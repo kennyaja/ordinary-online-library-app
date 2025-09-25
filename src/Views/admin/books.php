@@ -53,7 +53,7 @@ use App\Lib\View\View;
 
 	<div id="modal" class="fixed left-0 top-0 z-1 w-full h-full backdrop-brightness-75 transition-all duration-200 invisible opacity-0">
 		<div id="modalContent" class="mx-auto container max-w-3xl mt-20 bg-white px-4 py-5 z-2 rounded-lg shadow-lg">
-			<h1>hi</h1>
+			<!-- js content -->
 		</div>
 	</div>
 
