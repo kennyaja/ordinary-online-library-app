@@ -20,19 +20,19 @@ class Books {
 	}
 	
 	public function api_list() {
-		$this->http_header->content_type = "text/json";
+		$this->http_header->content_type = "application/json";
 
 		return json_encode($this->books_model->getAll());
 	}
 	
 	public function api_details() {
-		$this->http_header->content_type = "text/json";
+		$this->http_header->content_type = "application/json";
 
 		return json_encode($this->books_model->where("id", $_GET["id"])->getFirst() ?? ["error" => "Book does not exist"]);
 	}
 	
 	public function api_submit() {
-		$this->http_header->content_type = "text/json";
+		$this->http_header->content_type = "application/json";
 
 		$errors = [];
 
@@ -65,7 +65,7 @@ class Books {
 	}
 
 	public function api_update() {
-		$this->http_header->content_type = "text/json";
+		$this->http_header->content_type = "application/json";
 
 		$errors = [];
 
@@ -115,7 +115,7 @@ class Books {
 	}
 	
 	public function api_delete() {
-		$this->http_header->content_type = "text/json";
+		$this->http_header->content_type = "application/json";
 
 		$this->books_model->delete()->where("id", $_POST["id"])->execute();
 

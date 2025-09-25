@@ -15,13 +15,13 @@ class Users {
 	}
 
 	public function api_list() {
-		$this->http_header->content_type = "text/json";
+		$this->http_header->content_type = "application/json";
 
 		return json_encode($this->users_model->getAll());
 	}
 
 	public function api_details() {
-		$this->http_header->content_type = "text/json";
+		$this->http_header->content_type = "application/json";
 
 		return json_encode($this->users_model->getFirst());
 	}
