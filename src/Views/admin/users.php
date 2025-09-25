@@ -18,6 +18,7 @@ use App\Lib\View\View;
 						<th>#</th>
 						<th>username</th>
 						<th>email</th>
+						<th>role</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -60,13 +61,14 @@ use App\Lib\View\View;
 						newEl("th", index + 1),
 						newEl("td", user.username),
 						newEl("td", user.email),
+						newEl("td", user.role),
 						newEl("td", null, {"class": "grid lg:grid-flow-col gap-1"}, [
 							newEl("button", "update", {
 								"class": "update-button px-3 py-2 rounded-md text-white bg-blue-400 hover:bg-blue-500 cursor-pointer",
 								"data-userid": user.id,
 								"data-action": "update",
 							}, null),
-							newEl("button", "BEGONE", {
+							newEl("button", "delete", {
 								"class": "update-button px-3 py-2 rounded-md text-white bg-red-500 hover:bg-red-600 cursor-pointer",
 								"data-userid": user.id,
 								"data-action": "delete",
