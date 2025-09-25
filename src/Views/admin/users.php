@@ -46,7 +46,7 @@ use App\Lib\View\View;
 		const table_contents = document.getElementById("table_contents");
 
 		async function getUsersList() {
-			const response = await fetch("/api/admin/users_list", {
+			const response = await fetch("/api/users/list", {
 				method: "POST",
 			});
 

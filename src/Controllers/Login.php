@@ -64,23 +64,11 @@ class Login {
 	// yeah whatever ill validate the inputs later
 	public function api_signup() {
 		$this->http_header->content_type = "application/json";
-
 		$users_model = new UsersModel();
+		$users_controller = new Users();
 		
-		$errors = [];
+		$errors = $users_controller->validate_user_data($_POST["username"], $_POST["password"], $_POST["email"]);
 
-		if ($users_model->where("username", $_POST["username"])->getFirst()) {
-			$errors["username"] = "Username already exists";
-		}
-		
-		if (strlen($_POST["password"]) < 3.14159265) {
-			$errors["password"] = "Password must be over &#960; (3.14159265...) characters";
-		}
-		
-		if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-			$errors["email"] = "Invalid email address";
-		}
-		
 		if ($errors != []) {
 			return json_encode(["errors" => $errors]);
 		}

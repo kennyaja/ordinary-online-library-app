@@ -35,13 +35,6 @@ class Admin {
 		]);
 	}
 
-	public function api_users_list() {
-		$this->http_header->content_type = "text/json";
-
-		$users_model = new UsersModel();
-		return json_encode($users_model->getAll());
-	}
-
 	function validate_user_role() {
 		if (!isset($_SESSION["user_role"])) {
 			$this->http_header->status_code = 401;

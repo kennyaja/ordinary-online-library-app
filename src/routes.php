@@ -19,7 +19,11 @@ return [
 	"/api/books/delete" => [Controllers\Books::class, "api_delete"],
 	"/api/books/details" => [Controllers\Books::class, "api_details"],
 
-	"/api/admin/users_list" => [Controllers\Admin::class, "api_users_list"],
+	"/api/users/list" => [Controllers\Users::class, "api_list"],
+	"/api/users/insert" => [Controllers\Users::class, "api_insert"],
+	"/api/users/update" => [Controllers\Users::class, "api_update"],
+	"/api/users/delete" => [Controllers\Users::class, "api_delete"],
+	"/api/users/details" => [Controllers\Users::class, "api_details"],
 	
 	"/login" => [Controllers\Login::class, "index"],
 	"/signup" => [Controllers\Login::class, "signup"],
