@@ -23,7 +23,7 @@ class Users {
 	public function api_details() {
 		$this->http_header->content_type = "application/json";
 
-		return json_encode($this->users_model->getFirst());
+		return json_encode($this->users_model->where("id", $_GET["id"])->getFirst() ?? ["error" => "User does not exist"]);
 	}
 
 	public function api_insert() {
