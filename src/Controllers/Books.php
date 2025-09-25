@@ -22,21 +22,17 @@ class Books {
 	public function api_list() {
 		$this->http_header->content_type = "text/json";
 
-		$books_model = new BooksModel();
-		return json_encode($books_model->getAll());
+		return json_encode($this->books_model->getAll());
 	}
 	
 	public function api_details() {
 		$this->http_header->content_type = "text/json";
 
-		$books_model = new BooksModel();
-		return json_encode($books_model->where("id", $_GET["id"])->getFirst() ?? ["error" => "Book does not exist"]);
+		return json_encode($this->books_model->where("id", $_GET["id"])->getFirst() ?? ["error" => "Book does not exist"]);
 	}
 	
 	public function api_submit() {
 		$this->http_header->content_type = "text/json";
-
-		$books_model = new BooksModel();
 
 		$errors = [];
 
@@ -57,7 +53,7 @@ class Books {
 		move_uploaded_file($_FILES["content_pdf_file"]["tmp_name"], $pdf_file_path);
 		move_uploaded_file($_FILES["image_file"]["tmp_name"], $image_file_path);
 
-		$books_model->insert([
+		$this->books_model->insert([
 			"title" => $_POST["title"],
 			"author" => $_POST["author"],
 			"description" => $_POST["description"],
@@ -70,8 +66,6 @@ class Books {
 
 	public function api_update() {
 		$this->http_header->content_type = "text/json";
-
-		$books_model = new BooksModel();
 
 		$errors = [];
 
@@ -102,7 +96,7 @@ class Books {
 				move_uploaded_file($_FILES["image_file"]["tmp_name"], $image_file_path);
 			}
 
-			$books_model->update([
+			$this->books_model->update([
 				"title" => $_POST["title"],
 				"author" => $_POST["author"],
 				"description" => $_POST["description"],
@@ -110,7 +104,7 @@ class Books {
 				"image_url" => "{server_addr}/" . $image_file_path,
 			])->where("id", $_POST["id"])->execute();
 		} else {
-			$books_model->update([
+			$this->books_model->update([
 				"title" => $_POST["title"],
 				"author" => $_POST["author"],
 				"description" => $_POST["description"],
@@ -123,9 +117,7 @@ class Books {
 	public function api_delete() {
 		$this->http_header->content_type = "text/json";
 
-		$books_model = new BooksModel();
-
-		$books_model->delete()->where("id", $_POST["id"])->execute();
+		$this->books_model->delete()->where("id", $_POST["id"])->execute();
 
 		return json_encode(["status" => "ok"]);
 	}
