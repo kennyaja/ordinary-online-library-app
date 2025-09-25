@@ -6,7 +6,6 @@
 	<div class="flex flex-col gap-3">
 		<a href="/admin" <?= $path == "/admin" ? "class='text-blue-500'" : "" ?>>Dashboard</a>
 		<a href="/admin/users" <?= $path == "/admin/users" ? "class='text-blue-500'" : "" ?>>Users</a>
-		<a href="/admin/cashiers" <?= $path == "/admin/cashiers" ? "class='text-blue-500'" : "" ?>>Cashiers</a>
 		<a href="/admin/books" <?= $path == "/admin/books" ? "class='text-blue-500'" : "" ?>>Books</a>
 	</div>
 	<div class="flex flex-col gap-3">
