@@ -144,7 +144,7 @@ use App\Lib\View\View;
 							method: "POST",
 							body: formData,
 						}).then(() => {
-							getBooksList().then(users_list => loadBookTable(users_list));
+							getUsersList().then(users_list => loadUsersTable(users_list));
 							toggleModal();
 						});
 					},
