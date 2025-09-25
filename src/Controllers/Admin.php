@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Lib\HTTP\HTTPHeader;
 use App\Lib\View\View;
-use App\Models\BooksModel;
 use App\Models\UsersModel;
 
 class Admin {
@@ -15,21 +14,13 @@ class Admin {
 	}
 
 	public function index() {
-		if (!isset($_SESSION["admin_id"])) {
-			$this->http_header->status_code = 401;
-			$this->http_header->location = "/admin/login";
-			return;
-		}
-		
+		$this->validate_user_role();
+
 		return View::get("admin/index.php", ["title" => "admin page xd"]);
 	}
 
 	public function users() {
-		if (!isset($_SESSION["admin_id"])) {
-			$this->http_header->status_code = 401;
-			$this->http_header->location = "/admin/login";
-			return;
-		}
+		$this->validate_user_role();
 
 		return View::get("admin/users.php", [
 			"title" => "admin page xd", 
@@ -37,11 +28,7 @@ class Admin {
 	}
 
 	public function books() {
-		if (!isset($_SESSION["admin_id"])) {
-			$this->http_header->status_code = 401;
-			$this->http_header->location = "/admin/login";
-			return;
-		}
+		$this->validate_user_role();
 
 		return View::get("admin/books.php", [
 			"title" => "admin page xd", 
@@ -53,5 +40,18 @@ class Admin {
 
 		$users_model = new UsersModel();
 		return json_encode($users_model->getAll());
+	}
+
+	function validate_user_role() {
+		if (!isset($_SESSION["user_role"])) {
+			$this->http_header->status_code = 401;
+			$this->http_header->location = "/login";
+			return;
+		}
+
+		if ($_SESSION["user_role"] != "admin") {
+			$this->http_header->status_code = 403;
+			return;
+		}
 	}
 }

@@ -7,17 +7,16 @@ the thing that stores data
 
 the tables and their fields are defined as such:
 
-|books|users|cashiers|admins|
-|-|-|-|-|
-|id (int, primary key, not null)|id (int, primary key, not null)|id (int, primary key, not null)|id (int, primary key, not null)|
-|title (varchar, not null)|username (varchar, not null)|username (varchar, not null)|username (varchar, not null)|
-|author (varchar)|password_hash (varchar, not null)|password_hash (varchar, not null)|password_hash (varchar, not null)|
+|books|users|
+|-|-|
+|id (int, primary key, not null)|id (int, primary key, not null)|
+|title (varchar, not null)|username (varchar, not null)|
+|author (varchar)|password_hash (varchar, not null)|
 |description (text)|email (varchar, not null)|
-|content_cdn_url (varchar, not null)|
+|content_cdn_url (varchar, not null)|role (varchar, not null)|
 |image_url (varchar, not null)|
 |borrowed_by (int)|
 |borrowed_at (timestamp)|
-
 
 the relation(s) of the tables are defined as such:
 

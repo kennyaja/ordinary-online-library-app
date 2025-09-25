@@ -4,8 +4,6 @@ namespace App\Controllers;
 
 use App\Lib\HTTP\HTTPHeader;
 use App\Lib\View\View;
-use App\Models\AdminsModel;
-use App\Models\CashiersModel;
 use App\Models\UsersModel;
 
 class Login {
@@ -40,60 +38,27 @@ class Login {
 		$this->http_header->content_type = "application/json";
 
 		$users_model = new UsersModel();
-		$cashiers_model = new CashiersModel();
-		$admins_model = new AdminsModel();
 
 		// $user_data = $users_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
 		$user_data = $users_model->where("username", $_POST["username"])->getFirst();
-		$user_role = "user";
-		
-		// dang it why does the teacher want a discrete table for each account role
-		if (!$user_data) {
-			$user_data = $cashiers_model->where("username", $_POST["username"])->getFirst();
-			$user_role = "cashier";
-		}
-		
+
 		if (!$user_data || !password_verify($_POST["password"], $user_data["password_hash"])) {
 			return json_encode(["error" => "Username or password is incorrect"]);
 		}
 
 		$_SESSION["username"] = $user_data["username"];
 		$_SESSION["user_id"] = $user_data["id"];
-		$_SESSION["user_role"] = $user_role;
+		$_SESSION["user_role"] = $user_data["role"];
 
 		$this->http_header->location = "/";
 	}
-	
-	public function api_admin_login() {
-		$this->http_header->content_type = "application/json";
 
-		$admins_model = new AdminsModel();
-		
-		$admin_data = $admins_model->where("username", $_POST["username"])->getFirst();
-		
-		if (!$admin_data || !password_verify($_POST["password"], $admin_data["password_hash"])) {
-			return json_encode(["error" => "Username or password is incorrect"]);
-		}
-		
-		$_SESSION["admin_username"] = $admin_data["username"];
-		$_SESSION["admin_id"] = $admin_data["id"];
-		
-		$this->http_header->location = "/admin";
-	}
-	
 	public function api_logout() {
 		unset($_SESSION["username"]);
 		unset($_SESSION["user_id"]);
 		unset($_SESSION["user_role"]);
 		
 		$this->http_header->location = "/";
-	}
-	
-	public function api_admin_logout() {
-		unset($_SESSION["admin_username"]);
-		unset($_SESSION["admin_id"]);
-		
-		$this->http_header->location = "/admin/login";
 	}
 
 	// yeah whatever ill validate the inputs later
@@ -123,7 +88,8 @@ class Login {
 		$users_model->insert([
 			"username" => $_POST["username"], 
 			"password_hash" => password_hash($_POST["password"], PASSWORD_DEFAULT), 
-			"email" => $_POST["email"] ?? ""
+			"email" => $_POST["email"] ?? "",
+			"role" => "user",
 		])->execute();
 
 		$this->http_header->location = "/login";
