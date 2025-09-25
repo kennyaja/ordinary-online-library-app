@@ -67,6 +67,58 @@ class Books {
 
 		return json_encode(["ok"]);
 	}
+
+	public function api_update() {
+		$this->http_header->content_type = "text/json";
+
+		$books_model = new BooksModel();
+
+		$errors = [];
+
+		if (
+			isset($_FILES["content_pdf_file"]) && 
+			!empty($_FILES["content_pdf_file"]) && 
+			$_FILES["content_pdf_file"]["error"] != 4
+		) {
+			var_dump($_FILES["content_pdf_file"]);
+			if ($_FILES["content_pdf_file"]["type"] != "application/pdf") {
+				$errors["content_pdf_file"] = "Uploaded file has type of " . $_FILES["content_pdf_file"]["type"] . ", which is not 'application/pdf'";
+			}
+			
+			if ($errors != null) {
+				return json_encode(["status" => "error", "errors" => $errors]);
+			}
+
+			$pdf_file_path = sprintf("uploads/pdf/%d_%s", time(), $_FILES["content_pdf_file"]["name"]);
+			$image_file_path = sprintf("uploads/img/book_cover/%d_%s", time(), $_FILES["image_file"]["name"]);
+
+			move_uploaded_file($_FILES["content_pdf_file"]["tmp_name"], $pdf_file_path);
+
+			if (
+				isset($_FILES["image_file"]) && 
+				!empty($_FILES["image_file"]) && 
+				$_FILES["image_file"]["error"] != 4
+			) {
+				move_uploaded_file($_FILES["image_file"]["tmp_name"], $image_file_path);
+			}
+
+			$books_model->update([
+				"title" => $_POST["title"],
+				"author" => $_POST["author"],
+				"description" => $_POST["description"],
+				"content_cdn_url" => "{server_addr}/" . $pdf_file_path,
+				"image_url" => "{server_addr}/" . $image_file_path,
+			])->where("id", $_POST["id"])->execute();
+		} else {
+			$books_model->update([
+				"title" => $_POST["title"],
+				"author" => $_POST["author"],
+				"description" => $_POST["description"],
+			])->where("id", $_POST["id"])->execute();
+		}
+
+		return json_encode(["status" => "ok"]);
+	}
 	
 	public function api_delete() {
 		$this->http_header->content_type = "text/json";
@@ -75,6 +127,6 @@ class Books {
 
 		$books_model->delete()->where("id", $_POST["id"])->execute();
 
-		return json_encode(["ok"]);
+		return json_encode(["status" => "ok"]);
 	}
 }

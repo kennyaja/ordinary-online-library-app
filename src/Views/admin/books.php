@@ -58,8 +58,67 @@ use App\Lib\View\View;
 	</div>
 
 	<script>
-		function loadTable() {
+		function loadBookTable(books_list) {
+			const table_contents = document.getElementById("table_contents");
+			table_contents.innerHTML = '';
 
+			books_list.forEach((book, index) => {
+				const actual_content_cdn_url = `${location.protocol}//${book.content_cdn_url.replace("{server_addr}", location.host)}`;
+
+				table_contents.append(
+					newEl("tr", null, {"class": "*:p-3 border-b-gray-300 border-b-1", "id": `book_${book.id}`}, [
+						newEl("th", index + 1),
+						newEl("td", book.title),
+						newEl("td", book.author),
+						newEl("td", null, {"class": "max-w-64"}, [
+							newEl("a", actual_content_cdn_url, {"class": "text-blue-500", "href": actual_content_cdn_url}, null),
+						]),
+						newEl("td", null, {"class": "grid lg:grid-flow-col gap-1"}, [
+							newEl("button", "update", {
+								"class": "update-button px-3 py-2 rounded-md text-white bg-blue-400 hover:bg-blue-500 cursor-pointer",
+								"data-bookid": book.id,
+								"data-action": "update",
+							}, null),
+							newEl("button", "delete", {
+								"class": "update-button px-3 py-2 rounded-md text-white bg-red-500 hover:bg-red-600 cursor-pointer",
+								"data-bookid": book.id,
+								"data-action": "delete",
+							}, null)
+						]),
+					]),
+				)
+			})
+
+			const buttons = document.querySelectorAll(".update-button");
+
+			buttons.forEach(button => {
+				button.addEventListener('click', async () => {
+					if (button.dataset.action == "update") {
+						toggleModal();
+
+						let response = await fetch(`/api/books/details?id=${button.dataset.bookid}`);
+						let book_data = await response.json();
+
+						setModalContent(...formModalContent(book_data.id, book_data.title, book_data.author, book_data.description, "/api/books/update", "update book"));
+					}
+
+					if (button.dataset.action == "delete") {
+						if (!confirm("you sure?")) {
+							return;
+						}
+
+						const formdata = new FormData();
+						formdata.append("id", button.dataset.bookid);
+
+						fetch("/api/books/delete", {
+							method: "POST",
+							body: formdata,
+						}).then(() => {
+							getBooksList().then(books_list => loadBookTable(books_list));
+						});
+					}
+				})
+			})
 		}
 	</script>
 
@@ -87,53 +146,52 @@ use App\Lib\View\View;
 	</script>
 
 	<script>
-		const add_new = el("#add_new");
-
-		add_new.onclick = () => {
-			toggleModal();
-			setModalContent(
+		function formModalContent(id, title, author, description, url, modal_title) {
+			return [
 				newEl("div", null, {"class": "flex justify-between"}, [
-					newEl("h1", "add new book", {"class": "text-3xl font-bold float-left"}),
+					newEl("h1", modal_title, {"class": "text-3xl font-bold float-left"}),
 					newEl("div", null, {"class": "rounded-full bg-red-500 float-right px-2.5 py-2 text-white", "onclick": "toggleModal()"}, [
 						newEl("i", null, {"class": "fa-solid fa-xmark"}),
 					]),
 				]),
 
 				newEl("form", null, {
-					"method": "post", 
-					"enctype": "multipart/form-data", 
 					"class": "mt-5 grid grid-flow-row gap-3", 
-					"action": "/api/books/submit", 
 					"id": "book_submit_form",
 					"_event_submit": (event, el) => {
 						event.preventDefault();
 						
 						const formData = new FormData(el);
 						
-						fetch("/api/books/submit", {
+						fetch(url, {
 							method: "POST",
 							body: formData,
+						}).then(() => {
+							getBooksList().then(books_list => loadBookTable(books_list));
+							toggleModal();
 						});
 					},
 				}, [
+					newEl("input", null, {"type": "hidden", "name": "id", "value": id ?? ""}),
+
 					newEl("div", null, {"class": "grid grid-flow-col grid-cols-auto gap-4"}, [
 						newEl("div", null, null, [
 							newEl("label", "title", {"for": "title"}),
-							newEl("input", null, {"name": "title", "id": "title", "class": "bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1"}),
+							newEl("input", null, {"name": "title", "id": "title", "class": "bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1", "value": title ?? ""}),
 						]),
 
 						newEl("div", null, null, [
 							newEl("label", "author", {"for": "author"}),
-							newEl("input", null, {"name": "author", "id": "author", "class": "bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1"}),
+							newEl("input", null, {"name": "author", "id": "author", "class": "bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1", "value": author ?? ""}),
 						]),
 					]),
 
 					newEl("label", "description", {"for": "description"}),
-					newEl("textarea", null, {"name": "description", "id": "description", "class": "bg-white px-3 py-2 border-gray-500 border-1 rounded-md w-full mt-1"}),
+					newEl("textarea", description, {"name": "description", "id": "description", "class": "bg-white px-3 py-2 border-gray-500 border-1 rounded-md w-full mt-1"}),
 
 					// idk maybe add external link support for this maybe perhaps
 					newEl("div", null, null, [
-						newEl("label", "content pdf file", {"for": "content pdf_file"}),
+						newEl("label", "content pdf file", {"for": "content_pdf_file"}),
 						newEl("br"),
 						newEl("input", null, {"type": "file", "name": "content_pdf_file", "id": "content_pdf_file", "class": "file:bg-gray-200 file:px-3 file:py-1 file:rounded-md"}),
 					]),
@@ -146,13 +204,20 @@ use App\Lib\View\View;
 
 					newEl("button", "submit", {"class": "bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-md px-4 py-2 duration-200 cursor-pointer"}),
 				])
-			);
+			]
 		}
 	</script>
 
 	<script>
-		const table_contents = document.getElementById("table_contents");
+		const add_new = el("#add_new");
 
+		add_new.onclick = () => {
+			toggleModal();
+			setModalContent(...formModalContent(null, null, null, null, "/api/books/submit", "add new book"));
+		}
+	</script>
+
+	<script>
 		async function getBooksList() {
 			const response = await fetch("/api/books/list", {
 				method: "POST",
@@ -163,54 +228,7 @@ use App\Lib\View\View;
 		}
 
 		getBooksList().then((books_list) => {
-			books_list.forEach((book, index) => {
-				const actual_content_cdn_url = `${location.protocol}//${book.content_cdn_url.replace("{server_addr}", location.host)}`;
-
-				table_contents.append(
-					newEl("tr", null, {"class": "*:p-3 border-b-gray-300 border-b-1", "id": `book_${book.id}`}, [
-						newEl("th", index + 1),
-						newEl("td", book.title),
-						newEl("td", book.author),
-						newEl("td", null, {"class": "max-w-64"}, [
-							newEl("a", actual_content_cdn_url, {"class": "text-blue-500", "href": actual_content_cdn_url}, null),
-						]),
-						newEl("td", null, {"class": "grid lg:grid-flow-col gap-1"}, [
-							newEl("button", "update", {
-								"class": "update-button px-3 py-2 rounded-md text-white bg-blue-400 hover:bg-blue-500 cursor-pointer",
-								"data-bookid": book.id,
-								"data-action": "update",
-							}, null),
-							newEl("button", "BEGONE", {
-								"class": "update-button px-3 py-2 rounded-md text-white bg-red-500 hover:bg-red-600 cursor-pointer",
-								"data-bookid": book.id,
-								"data-action": "delete",
-							}, null)
-						]),
-					]),
-				)
-			})
-
-			const buttons = document.querySelectorAll(".update-button");
-
-			buttons.forEach(button => {
-				button.addEventListener('click', () => {
-					if (button.dataset.action == "update") {
-						toggleModal();
-					}
-
-					if (button.dataset.action == "delete") {
-						const formdata = new FormData();
-						formdata.append("id", button.dataset.bookid);
-
-						fetch("/api/books/delete", {
-							method: "POST",
-							body: formdata,
-						});
-
-						el(`#book_${button.dataset.bookid}`).remove();
-					}
-				})
-			})
+			loadBookTable(books_list);
 		});
 	</script>
 </body>

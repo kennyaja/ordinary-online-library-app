@@ -15,6 +15,7 @@ return [
 	"/books/book" => [Controllers\Books::class, "details"],
 	"/api/books/list" => [Controllers\Books::class, "api_list"],
 	"/api/books/submit" => [Controllers\Books::class, "api_submit"],
+	"/api/books/update" => [Controllers\Books::class, "api_update"],
 	"/api/books/delete" => [Controllers\Books::class, "api_delete"],
 	"/api/books/details" => [Controllers\Books::class, "api_details"],
 
