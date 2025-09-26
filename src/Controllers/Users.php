@@ -29,7 +29,7 @@ class Users {
 	public function api_insert() {
 		$this->http_header->content_type = "application/json";
 
-		$errors = $this->validate_user_data($_POST["username"], $_POST["password"], $_POST["email"]);
+		$errors = $this->validate_user_data($_POST["username"], $_POST["password"], $_POST["email"], null);
 		if ($errors != []) {
 			return json_encode(["status" => "error", "errors" => $errors]);
 		}
@@ -47,7 +47,7 @@ class Users {
 	public function api_update() {
 		$this->http_header->content_type = "application/json";
 
-		$errors = $this->validate_user_data($_POST["username"], $_POST["password"], $_POST["email"]);
+		$errors = $this->validate_user_data($_POST["username"], ($_POST["password"] != "") ? $_POST["password"] : null, $_POST["email"], $_POST["id"]);
 		if ($errors != []) {
 			return json_encode(["status" => "error", "errors" => $errors]);
 		}
@@ -70,18 +70,19 @@ class Users {
 		return json_encode(["status" => "ok"]);
 	}
 
-	function validate_user_data($username, $password, $email) {
+	function validate_user_data($username, $password, $email, $id) {
 		$errors = [];
 
-		if ($this->users_model->where("username", $username)->get_first()) {
+		$user_data =$this->users_model->where("username", $username)->get_first();
+		if ($user_data["username"] == $username && $id != $user_data["id"]) {
 			$errors["username"] = "Username already exists";
 		}
 		
-		if (strlen($password) < 3.14159265) {
+		if (strlen($password) < 3.14159265 && $password !== null) {
 			$errors["password"] = "Password must be over &#960; (3.14159265...) characters";
 		}
 		
-		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL) && $email !== null) {
 			$errors["email"] = "Invalid email address";
 		}
 		

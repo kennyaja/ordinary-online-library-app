@@ -42,6 +42,10 @@ class Login {
 		$_SESSION["user_id"] = $user_data["id"];
 		$_SESSION["user_role"] = $user_data["role"];
 
+		if (isset($_POST["redirect"])) {
+			$this->http_header->location = "/" . $_POST["redirect"];
+			return;
+		}
 		$this->http_header->location = "/";
 	}
 
@@ -59,8 +63,7 @@ class Login {
 		$users_model = new UsersModel();
 		$users_controller = new Users();
 		
-		$errors = $users_controller->validate_user_data($_POST["username"], $_POST["password"], $_POST["email"]);
-
+		$errors = $users_controller->validate_user_data($_POST["username"], $_POST["password"], $_POST["email"], null);
 		if ($errors != []) {
 			return json_encode(["errors" => $errors]);
 		}
