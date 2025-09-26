@@ -17,7 +17,7 @@ class Users {
 	public function api_list() {
 		$this->http_header->content_type = "application/json";
 
-		return json_encode($this->users_model->get_all());
+		return json_encode($this->users_model->order_by("id", "DESC")->get_all());
 	}
 
 	public function api_details() {
