@@ -27,6 +27,16 @@ abstract class Model extends Database {
 		return $this;
 	}
 
+	public function order_by(string $key, string|null $order = "ASC") {
+		if ($this->query_str == "") {
+			$this->query_str = "SELECT * FROM $this->table";
+		}
+
+		$this->query_str .= " ORDER BY $key $order";
+
+		return $this;
+	}
+
 	public function execute() {
 		if ($this->query_str == "") {
 			$this->query_str = "SELECT * FROM $this->table";
