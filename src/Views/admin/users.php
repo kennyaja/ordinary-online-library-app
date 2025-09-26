@@ -76,7 +76,7 @@ use App\Lib\View\View;
 						let response = await fetch(`/api/users/details?id=${button.dataset.userid}`);
 						let user_data = await response.json();
 
-						setModalContent(...formModalContent(user_data.id, user_data.username, user_data.email, null, "/api/users/update", "update user"));
+						setModalContent(...formModalContent(user_data.id, user_data.username, user_data.email, null, user_data.role, "/api/users/update", "update user"));
 					}
 
 					if (button.dataset.action == "delete") {
@@ -123,7 +123,7 @@ use App\Lib\View\View;
 	</script>
 
 	<script>
-		function formModalContent(id, username, email, password, url, modal_title) {
+		function formModalContent(id, username, email, password, user_role, url, modal_title) {
 			return [
 				newEl("div", null, {"class": "flex justify-between"}, [
 					newEl("h1", modal_title, {"class": "text-3xl font-bold float-left"}),
@@ -160,6 +160,24 @@ use App\Lib\View\View;
 					newEl("label", "password (y doe)", {"for": "password"}),
 					newEl("input", null, {"name": "password", "id": "password", "class": "bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1", "value": password ?? ""}),
 
+					newEl("div", null, {"class": "flex flex-col items-start"}, [
+						newEl("label", "role", {"for": "role"}),
+						newEl("select", null, {"name": "role", "id": "role", "class": "bg-gray-200 px-3 py-2 rounded-md"}, 
+							() => {
+								const roles = ["user", "cashier", "admin"];
+								let option_elements = [];
+
+								roles.forEach(role => {
+									option_elements.push(
+										newEl("option", role, {"value": role, "selected": (role == user_role ? "true" : null)})
+									);
+								});
+
+								return option_elements;
+							}
+						),
+					]),
+
 					newEl("button", "submit", {"class": "bg-blue-400 hover:bg-blue-500 text-white font-bold rounded-md px-4 py-2 duration-200 cursor-pointer"}),
 				])
 			]
@@ -171,7 +189,7 @@ use App\Lib\View\View;
 
 		add_new.onclick = () => {
 			toggleModal();
-			setModalContent(...formModalContent(null, null, null, null, "/api/users/submit", "add new user"));
+			setModalContent(...formModalContent(null, null, null, null, null, "/api/users/insert", "add new user"));
 		}
 	</script>
 
