@@ -13,14 +13,23 @@ function newEl(tagName, innerHTML, properties, children) {
 				return;
 			}
 
+			if (property[1] == null || property[1] == undefined) {
+				return;
+			}
 			element.setAttribute(property[0], property[1]);
 		});
 	}
 
 	if (children != null) {
-		children.forEach(child => {
-			element.appendChild(child);
-		});
+		if (typeof children == "function") {
+			children().forEach(child => {
+				element.appendChild(child);
+			});
+		} else {
+			children.forEach(child => {
+				element.appendChild(child);
+			});
+		}
 	}
 
 	return element;
