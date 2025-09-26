@@ -37,8 +37,10 @@ use App\Lib\View\View;
 					newEl("li", null, {"class": "shadow-md rounded-md overflow-hidden flex flex-col"}, [
 						newEl("img", null, {"class": "block w-full aspect-3/4 object-cover", "src": actual_image_url}),
 						newEl("div", null, {"class": "px-3 py-4 grid grid-flow-row justify-items-start gap-2 grow"}, [
-							newEl("h3", book.title, {"class": "text-2xl font-bold"}),
-							newEl("span", `by ${book.author}`, {"class": "text-gray-700"}),
+							newEl("div", null, {"class": "flex flex-col gap-2 mb-3"}, [
+								newEl("h3", book.title, {"class": "text-2xl font-bold"}),
+								newEl("span", `by ${book.author}`, {"class": "text-gray-700"}),
+							]),
 
 							newEl("div", null, {"class": "flex gap-1 mt-auto"}, [
 								newEl("a", "details", {
