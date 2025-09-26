@@ -41,12 +41,12 @@ abstract class Model extends Database {
 		return $statement;
 	}
 	
-	public function getAll() {
+	public function get_all() {
 		return $this->execute()->fetchAll(mode: PDO::FETCH_ASSOC);
 	}
 	
-	public function getFirst() {
-		return $this->getAll()[0];
+	public function get_first() {
+		return $this->get_all()[0];
 	}
 	
 	public function insert(array $params) {

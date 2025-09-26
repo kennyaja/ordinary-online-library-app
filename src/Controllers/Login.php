@@ -39,8 +39,8 @@ class Login {
 
 		$users_model = new UsersModel();
 
-		// $user_data = $users_model->getFirst(condition: "username=?", params: [$_POST["username"]]);
-		$user_data = $users_model->where("username", $_POST["username"])->getFirst();
+		// $user_data = $users_model->get_first(condition: "username=?", params: [$_POST["username"]]);
+		$user_data = $users_model->where("username", $_POST["username"])->get_first();
 
 		if (!$user_data || !password_verify($_POST["password"], $user_data["password_hash"])) {
 			return json_encode(["error" => "Username or password is incorrect"]);

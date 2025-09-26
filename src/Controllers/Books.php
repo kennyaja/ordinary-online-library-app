@@ -22,13 +22,13 @@ class Books {
 	public function api_list() {
 		$this->http_header->content_type = "application/json";
 
-		return json_encode($this->books_model->getAll());
+		return json_encode($this->books_model->order_by("id", "DESC")->get_all());
 	}
 	
 	public function api_details() {
 		$this->http_header->content_type = "application/json";
 
-		return json_encode($this->books_model->where("id", $_GET["id"])->getFirst() ?? ["error" => "Book does not exist"]);
+		return json_encode($this->books_model->where("id", $_GET["id"])->get_first() ?? ["error" => "Book does not exist"]);
 	}
 	
 	public function api_submit() {
@@ -69,7 +69,7 @@ class Books {
 
 		$errors = [];
 
-		$current_data = $this->books_model->where("id", $_POST["id"])->getFirst();
+		$current_data = $this->books_model->where("id", $_POST["id"])->get_first();
 
 		if (
 			isset($_FILES["content_pdf_file"]) && 

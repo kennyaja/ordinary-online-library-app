@@ -17,13 +17,13 @@ class Users {
 	public function api_list() {
 		$this->http_header->content_type = "application/json";
 
-		return json_encode($this->users_model->getAll());
+		return json_encode($this->users_model->get_all());
 	}
 
 	public function api_details() {
 		$this->http_header->content_type = "application/json";
 
-		return json_encode($this->users_model->where("id", $_GET["id"])->getFirst() ?? ["error" => "User does not exist"]);
+		return json_encode($this->users_model->where("id", $_GET["id"])->get_first() ?? ["error" => "User does not exist"]);
 	}
 
 	public function api_insert() {
@@ -73,7 +73,7 @@ class Users {
 	function validate_user_data($username, $password, $email) {
 		$errors = [];
 
-		if ($this->users_model->where("username", $username)->getFirst()) {
+		if ($this->users_model->where("username", $username)->get_first()) {
 			$errors["username"] = "Username already exists";
 		}
 		
