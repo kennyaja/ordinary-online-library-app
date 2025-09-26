@@ -10,7 +10,7 @@ the tables and their fields are defined as such:
 |books|users|
 |-|-|
 |id (int, primary key, not null)|id (int, primary key, not null)|
-|title (varchar, not null)|username (varchar, not null)|
+|title (varchar, not null)|username (varchar, unique, not null)|
 |author (varchar)|password_hash (varchar, not null)|
 |description (text)|email (varchar, not null)|
 |content_cdn_url (varchar, not null)|role (varchar, not null)|
