@@ -31,7 +31,6 @@ return [
 	"/api/logout" => [Controllers\Login::class, "api_logout"],
 	"/api/signup" => [Controllers\Login::class, "api_signup", "method" => "POST"],
 
-	"/admin/login" => [Controllers\Login::class, "admin_login"],
 	"/api/admin_login" => [Controllers\Login::class, "api_admin_login", "method" => "POST"],
 	"/api/admin_logout" => [Controllers\Login::class, "api_admin_logout"],
 	

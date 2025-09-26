@@ -26,8 +26,6 @@ use App\Lib\View\View;
 		</form>
 		<a href="/signup" class="text-blue-500 underline">no account?</a>
 	</div>
-	
-	<a href="/admin/login" class="fixed bottom-1 right-1 text-blue-500 underline text-xs">very very secret admin page</a>
 
 	<script>
 		const loginForm = document.getElementById("loginForm");

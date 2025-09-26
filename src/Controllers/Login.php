@@ -22,14 +22,6 @@ class Login {
 		return View::get("login/index.php", ["title" => "Log In"]);
 	}
 
-	public function admin_login() {
-		if (isset($_SESSION["admin_id"])) {
-			$this->http_header->location = "/admin";
-		}
-
-		return View::get("admin/login.php", ["title" => "Log in"]);
-	}
-
 	public function signup() {
 		return View::get("login/signup.php", ["title" => "Sign Up"]);
 	}
