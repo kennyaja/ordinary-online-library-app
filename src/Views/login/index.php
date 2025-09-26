@@ -34,6 +34,11 @@ use App\Lib\View\View;
 		async function sendData() {
 			const formData = new FormData(loginForm);
 
+			const searchParams = new URLSearchParams(window.location.search);
+			if (searchParams.has("redirect"))  {
+				formData.append("redirect", searchParams.get("redirect"));
+			}
+
 			const response = await fetch("/api/login", {
 				method: "POST",
 				body: formData,

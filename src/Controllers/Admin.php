@@ -38,12 +38,13 @@ class Admin {
 	function validate_user_role() {
 		if (!isset($_SESSION["user_role"])) {
 			$this->http_header->status_code = 401;
-			$this->http_header->location = "/login";
+			$this->http_header->location = "/login?redirect=admin";
 			return;
 		}
 
 		if ($_SESSION["user_role"] != "admin") {
 			$this->http_header->status_code = 403;
+			$this->http_header->location = "/login?redirect=admin";
 			return;
 		}
 	}
