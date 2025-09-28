@@ -52,11 +52,22 @@ abstract class Model extends Database {
 	}
 	
 	public function get_all() {
-		return $this->execute()->fetchAll(mode: PDO::FETCH_ASSOC);
+		$statement_result = $this->execute();
+		if (!$statement_result) {
+			return false;
+		}
+
+		return $statement_result->fetchAll(mode: PDO::FETCH_ASSOC);
 	}
 	
 	public function get_first() {
-		return $this->get_all()[0];
+		// return $this->get_all()[0];
+		$rows = $this->get_all();
+		if (!$rows) {
+			return false;
+		}
+
+		return $rows;
 	}
 	
 	public function insert(array $params) {
