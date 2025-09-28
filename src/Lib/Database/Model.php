@@ -67,7 +67,7 @@ abstract class Model extends Database {
 			return false;
 		}
 
-		return $rows;
+		return $rows[0];
 	}
 	
 	public function insert(array $params) {
