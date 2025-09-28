@@ -37,6 +37,15 @@ abstract class Model extends Database {
 		return $this;
 	}
 
+	public function join(string $column, string $row1, string $row2, string|null $operator = "=") {
+		if ($this->query_str == "") {
+			throw new Exception("Method join() cannot be called first");
+		}
+
+		$this->query_str .= " JOIN $column ON $row1 $operator $row2";
+		return $this;
+	}
+
 	public function execute() {
 		if ($this->query_str == "") {
 			$this->query_str = "SELECT * FROM $this->table";
@@ -68,6 +77,17 @@ abstract class Model extends Database {
 		}
 
 		return $rows[0];
+	}
+
+	public function select(string ...$rows) {
+		if ($rows != null) {
+			$rows_str = join(", ", $rows);
+			$this->query_str = "SELECT $rows_str FROM $this->table";
+		} else {
+			$this->query_str = "SELECT * FROM $this->table";
+		}
+
+		return $this;
 	}
 	
 	public function insert(array $params) {
