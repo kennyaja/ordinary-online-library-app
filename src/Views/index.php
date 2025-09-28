@@ -13,7 +13,7 @@ use App\Lib\View\View;
 	
 	<h1 class="text-4xl font-bold mt-20 text-center">some very cool books</h1>
 	<div class="container max-w-320 mx-auto">
-		<ul id="books_list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mx-8 mt-12">
+		<ul id="books_list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-8 mt-12">
 			<!-- js content -->
 		</ul>
 	</div>
