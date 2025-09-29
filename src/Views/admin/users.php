@@ -158,7 +158,7 @@ use App\Lib\View\View;
 					newEl("input", null, {"name": "email", "id": "email", "class": "bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1", "value": email ?? ""}),
 
 					newEl("label", "password (y doe)", {"for": "password"}),
-					newEl("input", null, {"name": "password", "id": "password", "class": "bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1", "value": password ?? ""}),
+					newEl("input", null, {"name": "password", "id": "password", "class": "bg-white p-3 border-gray-500 border-1 rounded-md w-full mt-1", "value": password ?? "", "autocomplete": "off"}),
 
 					newEl("div", null, {"class": "flex flex-col items-start"}, [
 						newEl("label", "role", {"for": "role"}),
