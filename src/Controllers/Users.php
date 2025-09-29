@@ -54,10 +54,15 @@ class Users {
 
 		$this->users_model->update([
 			"username" => $_POST["username"],
-			"password_hash" => password_hash($_POST["password"], PASSWORD_DEFAULT), 
 			"email" => $_POST["email"] ?? "",
 			"role" => $_POST["role"] ?? "user",
 		])->where("id", $_POST["id"])->execute();
+
+		if ($_POST["password"] != null) {
+			$this->users_model->update([
+				"password_hash" => password_hash($_POST["password"], PASSWORD_DEFAULT),
+			])->where("id", $_POST["id"])->execute();
+		}
 
 		return json_encode(["status" => "ok"]);
 	}
