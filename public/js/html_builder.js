@@ -27,6 +27,10 @@ function newEl(tagName, innerHTML, properties, children) {
 			});
 		} else {
 			children.forEach(child => {
+				if (typeof child == "function") {
+					element.appendChild(child());
+					return;
+				}
 				element.appendChild(child);
 			});
 		}

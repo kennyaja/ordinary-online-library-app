@@ -20,15 +20,13 @@ use App\Lib\View\View;
 	
 	<script>
 		const books_list = document.querySelector("#books_list");
-		
-		async function getBooksList() {
-			const response = await fetch("/api/books/list");
 
-			const json = await response.json();
-			return json;
-		}
+		async function loadBooks() {
+			const response = await fetch("/api/books/list?show_borrow_status=1");
+			const books = await response.json();
 
-		getBooksList().then(books => {
+			el("#books_list").innerHTML = "";
+
 			books.forEach(book => {
 				const actual_content_cdn_url = `${location.protocol}//${book.content_cdn_url.replace("{server_addr}", location.host)}`;
 				const actual_image_url = `${location.protocol}//${book.image_url.replace("{server_addr}", location.host)}`;
@@ -42,19 +40,41 @@ use App\Lib\View\View;
 								newEl("span", `by ${book.author}`, {"class": "text-gray-700"}),
 							]),
 
-							newEl("div", null, {"class": "flex gap-1 mt-auto"}, [
+							newEl("div", null, {"class": "flex gap-1 mt-auto items-center"}, [
 								newEl("a", "details", {
 									"class": "border-green-400 hover:border-green-500 border-2 transition-colors duration-200 px-4 py-2 rounded-md text-green-400 hover:text-green-500 hover:bg-gray-100", 
 									"href": `books/book?id=${book.id}`}),
 								
 								newEl("a", "read", {"class": "bg-blue-400 hover:bg-blue-500 transition-colors duration-200 px-4 py-2 rounded-md text-white", "href": actual_content_cdn_url}),
-								newEl("a", "borrow", {"class": "bg-yellow-400 hover:bg-yellow-500 transition-colors duration-200 px-4 py-2 rounded-md text-white", "href": "/j"})
+								() => {
+									if (book.borrow_status == null) {
+										return newEl("a", "borrow", {
+											"class": "bg-yellow-400 hover:bg-yellow-500 transition-colors duration-200 px-4 py-2 rounded-md text-white", 
+											"href": "javascript:void(0)",
+											"_event_click": () => {
+												let form_data = new FormData();
+												form_data.append("book_id", book.id);
+
+												fetch("/api/borrows/borrow", {
+													method: "POST",
+													body: form_data,
+												}).then(() => {
+													loadBooks();
+												})
+											}
+										})
+									} else {
+										return newEl("span", `borrow ${book.borrow_status}`, {"class": "text-yellow-500 px-3"})
+									}
+								}
 							]),
 						])
 					])
 				)
 			})
-		});
+		}
+
+		loadBooks();
 	</script>
 </body>
 </html>

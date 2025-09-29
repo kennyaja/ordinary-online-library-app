@@ -37,12 +37,12 @@ abstract class Model extends Database {
 		return $this;
 	}
 
-	public function join(string $column, string $row1, string $row2, string|null $operator = "=") {
+	public function join(string $column, string $row1, string $row2, string|null $type = "", string|null $comparison_operator = "=") {
 		if ($this->query_str == "") {
 			throw new Exception("Method join() cannot be called first");
 		}
 
-		$this->query_str .= " JOIN $column ON $row1 $operator $row2";
+		$this->query_str .= " $type JOIN $column ON $row1 $comparison_operator $row2";
 		return $this;
 	}
 
@@ -120,6 +120,16 @@ abstract class Model extends Database {
 
 	public function delete() {
 		$this->query_str = "DELETE FROM $this->table";
+		return $this;
+	}
+
+	// kinda outlandish for a model but alright
+	public function custom_clause(string $clause, array|null $params = null) {
+		$this->query_str .= " $clause";
+		foreach ($params as $key => $value) {
+			$this->query_params[$key] = $value;
+		}
+
 		return $this;
 	}
 }

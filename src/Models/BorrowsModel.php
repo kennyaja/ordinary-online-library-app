@@ -5,5 +5,5 @@ namespace App\Models;
 use App\Lib\Database\Model;
 
 class BorrowsModel extends Model {
-	protected string $table = "books";
+	protected string $table = "borrows";
 }

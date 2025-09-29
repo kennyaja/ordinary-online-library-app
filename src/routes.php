@@ -25,6 +25,14 @@ return [
 	"/api/users/delete" => [Controllers\Users::class, "api_delete"],
 	"/api/users/details" => [Controllers\Users::class, "api_details"],
 	
+	"/cashier" => [Controllers\Cashier::class, "index"],
+	"/cashier/borrows" => [Controllers\Cashier::class, "borrows"],
+
+	"/api/borrows/list" => [Controllers\Borrows::class, "api_list"],
+	"/api/borrows/details" => [Controllers\Borrows::class, "api_details"],
+	"/api/borrows/borrow" => [Controllers\Borrows::class, "api_borrow"],
+	"/api/borrows/update_status" => [Controllers\Borrows::class, "api_update_status"],
+
 	"/login" => [Controllers\Login::class, "index"],
 	"/signup" => [Controllers\Login::class, "signup"],
 	"/api/login" => [Controllers\Login::class, "api_login", "method" => "POST"],

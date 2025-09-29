@@ -22,6 +22,15 @@ class Books {
 	public function api_list() {
 		$this->http_header->content_type = "application/json";
 
+		if ($_GET["show_borrow_status"]) {
+			return json_encode($this->books_model
+				->select("books.*", "borrows.status as borrow_status")
+				->join("borrows", "books.id", "borrows.book_id", "left")
+				->custom_clause("AND borrows.user_id = :current_user_id", ["current_user_id" => $_SESSION["user_id"]])
+				->order_by("id", "DESC")
+				->get_all());
+		}
+
 		return json_encode($this->books_model->order_by("id", "DESC")->get_all());
 	}
 	
