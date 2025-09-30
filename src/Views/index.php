@@ -8,8 +8,7 @@ use App\Lib\View\View;
 	<?= View::get("components/metadata.php", ["title" => $title]) ?>
 </head>
 <body>
-	<?= $_SESSION["username"] ?? "log in buddy" ?> (<?= $_SESSION["user_role"] ?? "" ?>)
-	<a href="/api/logout" class="text-blue-500">log out</a>
+	<?= View::get("components/header.php") ?>
 	
 	<h1 class="text-4xl font-bold mt-20 text-center">some very cool books</h1>
 	<div class="container max-w-320 mx-auto">
@@ -47,6 +46,10 @@ use App\Lib\View\View;
 								
 								newEl("a", "read", {"class": "bg-blue-400 hover:bg-blue-500 transition-colors duration-200 px-4 py-2 rounded-md text-white", "href": actual_content_cdn_url}),
 								() => {
+									if (user_role != "user") {
+										return;
+									}
+
 									if (book.borrow_status == null) {
 										return newEl("a", "borrow", {
 											"class": "bg-yellow-400 hover:bg-yellow-500 transition-colors duration-200 px-4 py-2 rounded-md text-white", 

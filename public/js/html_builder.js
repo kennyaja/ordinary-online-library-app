@@ -28,7 +28,10 @@ function newEl(tagName, innerHTML, properties, children) {
 		} else {
 			children.forEach(child => {
 				if (typeof child == "function") {
-					element.appendChild(child());
+					let child_element = child();
+					if (child_element != null) {
+						element.appendChild(child());
+					}
 					return;
 				}
 				element.appendChild(child);
